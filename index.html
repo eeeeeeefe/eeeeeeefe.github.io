@@ -434,6 +434,7 @@
   <h3>Suggestions & Bug Reports</h3>
   <p>Is your major not in the list, or found a bug in a subject's name or credits? Let me know!</p>
   <form id="suggestionForm">
+    <input type="hidden" name="_subject" value="Course Planner Suggestion/Bug Report">
     <div class="suggestion-form-group">
       <label for="requestType">Request Type:</label>
       <select id="requestType" name="requestType" required>
@@ -448,6 +449,7 @@
       <textarea id="suggestionMessage" name="suggestionMessage" rows="5" placeholder="Please provide as much detail as possible. &#10;If reporting a bug, mention the major, subject name, and what's wrong (e.g., 'AEM, CHES001, credits should be 3 not 2')." required></textarea>
     </div>
     <button type="submit" class="control-button">Send Suggestion</button>
+    <p id="suggestionStatus" style="text-align: center; margin-top: 15px; font-weight: bold; min-height: 1.2em;"></p>
   </form>
 </div>
 <!-- === END OF NEW HTML === -->
@@ -589,28 +591,51 @@
     let lastDropTarget = null;
 
     // === NEW JAVASCRIPT FUNCTION FOR SUGGESTION FORM ===
-    function handleSuggestionSubmit(event) {
-      event.preventDefault(); // Prevent the form from submitting the traditional way
+    async function handleSuggestionSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const statusMessage = document.getElementById('suggestionStatus');
 
-      const requestType = document.getElementById('requestType').value;
-      const message = document.getElementById('suggestionMessage').value;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
 
-      if (!requestType || !message.trim()) {
-        alert('Please select a request type and write a message before sending.');
+      if (!data.requestType || !data.suggestionMessage.trim()) {
+        statusMessage.textContent = 'Please fill out all fields before sending.';
+        statusMessage.style.color = '#dc3545'; // Red
         return;
       }
 
-      const recipient = 'mohamed.nabil.seddik@gmail.com';
-      const subject = 'PLANNER REQUEST';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      statusMessage.textContent = '';
 
-      // Construct the email body
-      let body = `Request Type: ${requestType}\n\n`;
-      body += `Message:\n-----------------\n${message}`;
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/mohamed.nabil.seddik@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-      // Create and trigger the mailto link
-      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-      window.location.href = mailtoLink;
+        if (response.ok) {
+          statusMessage.textContent = 'Thank you! Your suggestion has been sent successfully.';
+          statusMessage.style.color = '#28a745'; // Green
+          form.reset();
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Server responded with an error.');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        statusMessage.textContent = 'Sorry, an error occurred. Please try again later.';
+        statusMessage.style.color = '#dc3545'; // Red
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Suggestion';
+      }
     }
     // === END OF NEW JAVASCRIPT FUNCTION ===
 
