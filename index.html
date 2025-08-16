@@ -16,6 +16,28 @@
             line-height: 1.6;
             padding: 20px;
         }
+        
+        /* Mobile notice banner styles */
+        .mobile-notice {
+            display: none; /* Hidden by default on desktop */
+            background-color: #eaf5ff;
+            color: #004085;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 0 auto 20px auto;
+            max-width: 900px;
+            font-size: 0.9em;
+            border: 1px solid #b8daff;
+        }
+
+        /* Media query to show the notice only on smaller screens */
+        @media (max-width: 768px) {
+            .mobile-notice {
+                display: block;
+            }
+        }
+
         .header-container { text-align: center; margin-bottom: 20px; }
         h1 {
             color: #2c3e50;
@@ -306,6 +328,8 @@
     </style>
 </head>
 <body>
+
+    <div class="mobile-notice">For the best experience, we recommend using a laptop or desktop computer.</div>
 
     <div class="header-container">
         <h1>Faculty of Engineering Course Planner</h1>
@@ -841,27 +865,61 @@
                 saveBtn.textContent = 'Saved!';
                 setTimeout(() => { saveBtn.textContent = 'Save Plan'; }, 1500);
             }
-
+            
+            // UPDATED: Smarter loadPlan function
             function loadPlan() {
                 document.querySelectorAll('.course-item').forEach(el => el.remove());
                 
                 const savedStateJSON = localStorage.getItem(getStorageKey());
-                const coursesToLoad = savedStateJSON ? JSON.parse(savedStateJSON) : majorCourseData[currentMajor];
-                const isSavedData = !!savedStateJSON;
-
-                coursesToLoad.forEach(courseData => {
-                    const courseEl = createCourseElement(courseData);
-                    const targetSemesterId = isSavedData ? courseData.semesterId : courseData.semester;
-                    const targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
-                    if (targetColumn) {
-                        targetColumn.querySelector('.course-list').appendChild(courseEl);
-                        if (isSavedData) {
-                            courseEl.querySelector('.grade-selector').value = courseData.grade;
+                
+                if (!savedStateJSON) {
+                    // No saved data, load default plan
+                    majorCourseData[currentMajor].forEach(courseData => {
+                        const courseEl = createCourseElement(courseData);
+                        const targetColumn = document.querySelector(`.semester-column[data-semester-id="${courseData.semester}"]`);
+                        if (targetColumn) {
+                            targetColumn.querySelector('.course-list').appendChild(courseEl);
+                        } else {
+                            plannerContainer.querySelector('.course-list').appendChild(courseEl);
                         }
-                    } else {
-                        plannerContainer.querySelector('.course-list').appendChild(courseEl);
-                    }
-                });
+                    });
+                } else {
+                    // Saved data exists, merge it with the latest course data
+                    const savedCourses = JSON.parse(savedStateJSON);
+                    const originalCourseMap = new Map(majorCourseData[currentMajor].map(c => [c.id, c]));
+
+                    savedCourses.forEach(savedCourse => {
+                        const originalCourse = originalCourseMap.get(savedCourse.id);
+                        let courseToRender;
+
+                        if (originalCourse) {
+                            // This is a default course. Use original data as a base.
+                            courseToRender = { ...originalCourse };
+                            // Apply user's saved customizations.
+                            courseToRender.semesterId = savedCourse.semesterId;
+                            courseToRender.grade = savedCourse.grade;
+                            courseToRender.isPlaceholder = savedCourse.isPlaceholder;
+                            // If it's a placeholder, also keep the user's custom name/code.
+                            if (savedCourse.isPlaceholder) {
+                                courseToRender.name = savedCourse.name;
+                                courseToRender.code = savedCourse.code;
+                            }
+                        } else {
+                            // This is a custom-added course ("custom-..." id). Use its data as is.
+                            courseToRender = savedCourse;
+                        }
+                        
+                        const courseEl = createCourseElement(courseToRender);
+                        const targetColumn = document.querySelector(`.semester-column[data-semester-id="${courseToRender.semesterId}"]`);
+                        if (targetColumn) {
+                            targetColumn.querySelector('.course-list').appendChild(courseEl);
+                            courseEl.querySelector('.grade-selector').value = courseToRender.grade;
+                        } else {
+                            // Fallback if semester doesn't exist
+                            plannerContainer.querySelector('.course-list').appendChild(courseEl);
+                        }
+                    });
+                }
                 updateAllCalculations();
             }
 
@@ -880,3 +938,4 @@
 
 </body>
 </html>
+--- END OF FILE !DOCTYPE html.txt ---
