@@ -267,20 +267,11 @@
       border-radius: 4px;
       font-size: 0.85em;
     }
-    /* === MODIFIED CSS FOR GRADE SELECTOR === */
     .grade-selector {
       border: 1px solid #ccc;
       border-radius: 4px;
-      /* Increased padding for a larger touch target */
-      padding: 5px 8px;
-      /* Slightly larger font for better readability */
-      font-size: 1em;
-      /* Added for smoother visual feedback */
-      transition: transform 0.1s ease-in-out;
-    }
-    /* Make it pop slightly when active/pressed */
-    .grade-selector:active {
-      transform: scale(1.05);
+      padding: 2px;
+      font-size: 0.9em;
     }
     .delete-course-btn {
       position: absolute;
@@ -818,26 +809,6 @@
       });
 
       courseEl.querySelector('.grade-selector').addEventListener('change', () => { updateAllCalculations(); });
-      
-      // === NEW JAVASCRIPT FIX FOR GRADE SELECTOR ===
-      // Prevents accidental dragging when interacting with the grade selector on touch/mouse.
-      const gradeSelector = courseEl.querySelector('.grade-selector');
-      const stopDrag = (e) => {
-        e.stopPropagation(); // Stop the event from bubbling up to the drag handler
-        courseEl.draggable = false;
-      };
-      const resumeDrag = () => {
-        courseEl.draggable = true;
-      };
-
-      gradeSelector.addEventListener('mousedown', stopDrag);
-      gradeSelector.addEventListener('touchstart', stopDrag, { passive: true }); // Use passive for better scroll performance
-
-      gradeSelector.addEventListener('mouseup', resumeDrag);
-      gradeSelector.addEventListener('mouseleave', resumeDrag);
-      gradeSelector.addEventListener('touchend', resumeDrag);
-      // === END OF NEW JAVASCRIPT FIX ===
-      
       return courseEl;
     }
 
@@ -928,8 +899,7 @@
 
       plannerContainer.addEventListener('touchstart', e => {
         const target = e.target.closest('.course-item');
-        // Make sure we are not trying to drag by grabbing the selector or delete button
-        if (target && !e.target.closest('.grade-selector, .delete-course-btn, [contenteditable="true"]')) {
+        if (target && !e.target.isContentEditable && !e.target.closest('.delete-course-btn')) {
           isDragging = true;
           touchDraggedItem = target;
           const rect = target.getBoundingClientRect();
