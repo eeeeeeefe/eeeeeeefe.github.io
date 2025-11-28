@@ -9,163 +9,104 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="412f8043-30f7-40b4-a65a-52b0b3d4d723"></script>
 
   <style>
+    /* === BASE STYLES === */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       background-color: #f4f7f6;
       color: #333;
       line-height: 1.6;
       padding: 20px;
+      margin: 0;
     }
 
-    /* === NEW CSS FOR TOP BANNER === */
+    /* === TOP BANNER === */
     .top-banner {
       background-color: #007bff;
       color: white;
       text-align: center;
-      padding: 10px 15px;
+      padding: 12px 15px;
       font-size: 0.95em;
       position: sticky;
       top: 0;
-      z-index: 1001; /* Ensure it's above other content */
+      z-index: 1001;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .top-banner a {
       color: #fff;
       font-weight: bold;
       text-decoration: underline;
+      cursor: pointer;
     }
-    .top-banner a:hover {
-      text-decoration: none;
-    }
+    .top-banner a:hover { text-decoration: none; }
 
     .header-container { text-align: center; margin-bottom: 20px; margin-top: 20px;}
     h1 {
       color: #2c3e50;
       padding: 10px;
-      cursor: pointer;
-      transition: background-color 0.2s;
       display: inline-block;
       font-size: 1.8em;
     }
-    h1:hover { background-color: #eaf5ff; }
 
-    .major-selector-container, .useful-links-container {
+    /* === CONTAINERS === */
+    .major-selector-container, .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container {
       background-color: #fff;
       padding: 15px 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-width: 500px;
+      max-width: 800px;
       margin: 20px auto;
       text-align: center;
     }
-    .major-selector-container label {
-      font-weight: bold;
-      color: #2c3e50;
-      margin-right: 10px;
-    }
-    #majorSelector {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    .control-button.undo-btn { background-color: #ffc107; }
-    .control-button.undo-btn:hover { background-color: #e0a800; }
-    .control-button:disabled {
-      background-color: #6c757d;
-      cursor: not-allowed;
-      opacity: 0.65;
-    }
-    .useful-links-container h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      color: #2c3e50;
-      font-size: 1.1em;
-    }
-    .useful-links-container p { margin: 5px 0; } /* Adjusted for better spacing */
-    .useful-links-container a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .useful-links-container a:hover { text-decoration: underline; }
-
+    
+    .major-selector-container label { font-weight: bold; color: #2c3e50; margin-right: 10px; }
+    #majorSelector { padding: 8px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em; cursor: pointer; }
+    
+    .useful-links-container h3, .grading-container h3, .add-course-container h3 { margin-top: 0; margin-bottom: 10px; color: #2c3e50; font-size: 1.1em; }
+    .useful-links-container a { color: #007bff; text-decoration: none; font-weight: bold; }
+    
+    /* === CONTROLS === */
     .controls-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
       margin-top: 15px;
       flex-wrap: wrap;
     }
     .gpa-counter, .total-credits-counter {
-      background-color: #28a745;
+      background-color: #17a2b8;
       color: white;
       padding: 8px 15px;
       border-radius: 20px;
       font-weight: bold;
-      font-size: 1.1em;
+      font-size: 1em;
+      white-space: nowrap;
     }
-    .gpa-counter { background-color: #17a2b8; }
+    .total-credits-counter { background-color: #28a745; }
+    
     .control-button {
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 8px 15px;
+      padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 0.9em;
-      transition: background-color 0.2s;
+      white-space: nowrap;
     }
     .control-button:hover { background-color: #0056b3; }
     .control-button.clear-btn { background-color: #dc3545; }
-    .control-button.clear-btn:hover { background-color: #c82333; }
+    .control-button.undo-btn { background-color: #ffc107; color: #333; }
+    .control-button:disabled { background-color: #6c757d; cursor: not-allowed; opacity: 0.65; color: white; }
 
-    .add-course-container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-width: 900px;
-      margin: 25px auto;
-    }
-    .add-course-container h3 {
-      margin-top: 0;
-      text-align: center;
-      color: #2c3e50;
-    }
-    .add-course-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .add-course-form input, .add-course-form select {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-    .add-course-form label {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      font-size: 0.85em;
-      color: #555;
-    }
-    .add-course-form button {
-      background-color: #28a745;
-      padding: 10px 20px;
-    }
+    /* === ADD COURSE FORM === */
+    .add-course-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; justify-content: center; }
+    .add-course-form input, .add-course-form select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    .add-course-form label { display: flex; flex-direction: column; gap: 5px; font-size: 0.85em; color: #555; text-align: left;}
 
-    .planner-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
+    /* === PLANNER GRID === */
+    .planner-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    
     .semester-column {
       background-color: #ffffff;
       border-radius: 8px;
@@ -178,17 +119,12 @@
       border-top: 5px solid #4a6fa5;
       transition: min-height 0.4s ease-in-out;
     }
-    .semester-column.collapsed {
-      min-height: 0;
-    }
-
+    .semester-column.collapsed { min-height: 0; }
     .semester-column.summer-term { border-top-color: #16a085; }
-    .semester-column.summer-term .credit-counter,
-    .semester-column.summer-term .semester-gpa { background-color: #16a085; }
-
+    
     .semester-column h2 {
       margin-top: 0;
-      font-size: 1.2em;
+      font-size: 1.1em;
       color: #2c3e50;
       border-bottom: 2px solid #eee;
       padding-bottom: 10px;
@@ -199,49 +135,28 @@
       position: relative;
       padding-right: 25px;
     }
-
-    .semester-title-text {
-      flex-grow: 1;
-    }
-
     .semester-column h2::after {
       content: '−';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #aab5c0;
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: 1.5em; font-weight: bold; color: #aab5c0;
     }
-    .semester-column.collapsed h2::after {
-      content: '+';
-    }
+    .semester-column.collapsed h2::after { content: '+'; }
 
-    .semester-stats { display: flex; gap: 6px; }
+    .semester-stats { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
     .credit-counter, .semester-gpa {
-      color: white;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      background-color: #4a6fa5;
+      color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75em; background-color: #4a6fa5; white-space: nowrap;
     }
     .semester-gpa { background-color: #6c757d; }
+    .semester-column.summer-term .credit-counter { background-color: #16a085; }
 
     .course-list {
       min-height: 100px;
       flex-grow: 1;
-      transition: all 0.2s ease-in-out;
       max-height: 1500px;
       overflow: hidden;
       margin-top: 10px;
     }
-    .semester-column.collapsed .course-list {
-      max-height: 0;
-      min-height: 0;
-      margin-top: 0;
-      overflow: hidden;
-    }
+    .semester-column.collapsed .course-list { max-height: 0; min-height: 0; margin-top: 0; }
 
     .course-item {
       background-color: #f9f9f9;
@@ -250,175 +165,116 @@
       margin-bottom: 8px;
       border-radius: 5px;
       cursor: grab;
-      transition: background-color 0.2s, border-color 0.2s; /* Add border-color transition */
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
       position: relative;
     }
     .course-item.course-graded { background-color: #d4edda; }
     .course-main-info { display: flex; justify-content: space-between; align-items: center; }
-    .course-details { font-size: 0.9em; font-weight: 500; }
+    .course-details { font-size: 0.9em; font-weight: 500; text-align: left; }
     .course-code { font-size: 0.8em; color: #666; }
-
+    
     .course-name-editable, .course-code-editable {
-      cursor: text;
-      background-color: #eaf5ff;
-      padding: 2px 4px;
-      border-radius: 3px;
-      transition: background-color 0.2s;
-      display: inline-block;
-      min-width: 50px;
-    }
-    .course-name-editable:hover, .course-code-editable:hover {
-      background-color: #d1e7fd;
-    }
-    .course-code-editable {
-      background-color: #e9ecef;
-    }
-    .course-code-editable:hover {
-      background-color: #ced4da;
+      cursor: text; background-color: #eaf5ff; padding: 2px 4px; border-radius: 3px; display: inline-block; min-width: 50px;
     }
 
-    .course-controls { display: flex; justify-content: space-between; align-items: center; }
+    .course-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 5px;}
     .course-credits {
-      font-weight: bold;
-      color: #0056b3;
-      background-color: #e9ecef;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.85em;
+      font-weight: bold; color: #0056b3; background-color: #e9ecef; padding: 3px 8px; border-radius: 4px; font-size: 0.8em;
     }
-    .grade-selector {
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 2px;
-      font-size: 0.9em;
-    }
+    .grade-selector { border: 1px solid #ccc; border-radius: 4px; padding: 2px; font-size: 0.9em; }
+    
     .delete-course-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      font-size: 14px;
-      text-align: center;
-      opacity: 0;
+      position: absolute; top: 5px; right: 5px;
+      background: #ff4d4d; color: white; border: none; border-radius: 50%;
+      width: 20px; height: 20px; cursor: pointer; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; /* Hidden by default */
       transition: opacity 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .course-item:hover .delete-course-btn { opacity: 1; }
+    .course-item:hover .delete-course-btn { opacity: 1; } /* Only visible on hover */
+    
     .dragging { opacity: 0.5; }
 
-    /* FIX: New CSS classes for the border-based drop indicator */
-    .drop-target-top {
-      border-top: 4px solid #007bff !important;
-    }
-    .drop-target-bottom {
-      border-bottom: 4px solid #007bff !important;
-    }
-    .course-list.drop-target-empty {
-      border: 2px dashed #007bff;
-      background-color: #f0f8ff;
-    }
+    /* Drop Indicators */
+    .drop-target-top { border-top: 4px solid #007bff !important; }
+    .drop-target-bottom { border-bottom: 4px solid #007bff !important; }
+    .course-list.drop-target-empty { border: 2px dashed #007bff; background-color: #f0f8ff; }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
-      font-size: 0.9em;
-      color: #666;
-    }
-    footer a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    /* === GRADING TABLE === */
+    .grading-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+    .grading-table th, .grading-table td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    .grading-table th { background-color: #f8f9fa; color: #2c3e50; }
+    .grading-table tr:nth-child(even) { background-color: #f9f9f9; }
 
-    /* === NEW CSS FOR SUGGESTION BOX === */
-    .suggestion-box-container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-width: 700px;
-      margin: 40px auto;
-      text-align: center;
+    /* === SUGGESTION BOX === */
+    #suggestionForm { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+    #suggestionForm select, #suggestionForm textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+    #suggestionForm textarea { resize: vertical; min-height: 100px; }
+    #suggestionForm button { align-self: center; width: 100%; padding: 10px 20px; }
+
+    footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.9em; color: #666; }
+
+    /* === MOBILE OPTIMIZATIONS === */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      
+      h1 { font-size: 1.5em; }
+
+      /* Make all containers full width */
+      .major-selector-container, .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+      }
+
+      /* Make semester columns full width on mobile */
+      .semester-column {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Controls stack better */
+      .controls-container {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+      .control-button {
+        flex-grow: 1;
+        text-align: center;
+        padding: 12px 10px; /* Larger touch target */
+      }
+
+      /* Form elements full width */
+      .add-course-form { flex-direction: column; align-items: stretch; }
+      .add-course-form label { width: 100%; }
+      .add-course-form button { width: 100%; margin-top: 10px;}
+
+      /* Table scroll on small screens */
+      .grading-container { overflow-x: auto; }
+      .grading-table { min-width: 300px; }
+
+      .delete-course-btn { width: 25px; height: 25px; font-size: 18px; }
     }
-    .suggestion-box-container h3 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
-    .suggestion-box-container p {
-      margin-bottom: 20px;
-      color: #555;
-      font-size: 0.9em;
-    }
-    #suggestionForm {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      text-align: left;
-    }
-    .suggestion-form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    #suggestionForm label {
-      font-weight: bold;
-      color: #2c3e50;
-      font-size: 0.9em;
-    }
-    #suggestionForm select,
-    #suggestionForm textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1em;
-      font-family: inherit;
-      box-sizing: border-box;
-    }
-    #suggestionForm textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    #suggestionForm button {
-      align-self: center;
-      width: 200px;
-      padding: 10px 20px;
-    }
-    /* === END OF NEW CSS === */
   </style>
 </head>
 <body>
 
-<!-- === STEP 2: ADDED TOP BANNER === -->
 <div class="top-banner">
-  Have a suggestion? 
-  <a href="#suggestionBox">Let us know!</a>
+  <a href="#gradingTableContainer">View Grading Scale</a> | 
+  <a href="#suggestionBox">Report Bug</a>
 </div>
 
 <div class="header-container">
   <h1>Faculty of Engineering Course Planner</h1>
   <div class="controls-container">
     <div id="cumulativeGpa" class="gpa-counter">GPA: 0.00</div>
-    <div id="totalCreditsTaken" class="total-credits-counter">Credits Taken: 0</div>
-    <button id="saveButton" class="control-button">Save Plan</button>
-    <button id="loadButton" class="control-button">Load Plan</button>
-    <button id="undoButton" class="control-button undo-btn" disabled>Undo Delete</button>
-    <button id="clearButton" class="control-button clear-btn">Clear Saved Data</button>
+    <div id="totalCreditsTaken" class="total-credits-counter">Credits: 0</div>
+    <button id="saveButton" class="control-button">Save</button>
+    <button id="loadButton" class="control-button">Load</button>
+    <button id="undoButton" class="control-button undo-btn" disabled>Undo</button>
+    <button id="clearButton" class="control-button clear-btn">Clear</button>
   </div>
 </div>
 
@@ -429,29 +285,50 @@
 
 <div class="useful-links-container">
   <h3>Useful Resources</h3>
-  <p>
-    <a href="https://drive.google.com/drive/folders/1n3ItTZHZwl_BA6rY5yyCNSI-RXeDAJBK" target="_blank" rel="noopener noreferrer">
-       All Official Course Maps
-    </a>
-  </p>
-  <!-- === STEP 5: ADDED FRESHMAN RESOURCES LINK === -->
-  <p>
-    <a href="https://drive.google.com/drive/folders/1G84ZnEROpzpF1TyNNnLVUrRTY66tkB0M?usp=sharing" target="_blank" rel="noopener noreferrer">
-       Freshman Subject Resources
-    </a>
-  </p>
+  <p><a href="https://drive.google.com/drive/folders/1n3ItTZHZwl_BA6rY5yyCNSI-RXeDAJBK" target="_blank">All Official Course Maps</a></p>
+  <p><a href="https://drive.google.com/drive/folders/1G84ZnEROpzpF1TyNNnLVUrRTY66tkB0M?usp=sharing" target="_blank">Freshman Subject Resources</a></p>
+</div>
+
+<!-- === GRADING SYSTEM TABLE ONLY === -->
+<div class="grading-container" id="gradingTableContainer">
+    <h3>Official Grading Scale</h3>
+    <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">Based on the Faculty Credit Hour System regulations.</p>
+    <table class="grading-table">
+        <thead>
+            <tr>
+                <th>Percentage (%)</th>
+                <th>Letter Grade</th>
+                <th>Points (GPA)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>97% and above</td><td>A+</td><td>4.00</td></tr>
+            <tr><td>93% - &lt;97%</td><td>A</td><td>4.00</td></tr>
+            <tr><td>89% - &lt;93%</td><td>A-</td><td>3.70</td></tr>
+            <tr><td>84% - &lt;89%</td><td>B+</td><td>3.30</td></tr>
+            <tr><td>80% - &lt;84%</td><td>B</td><td>3.00</td></tr>
+            <tr><td>76% - &lt;80%</td><td>B-</td><td>2.70</td></tr>
+            <tr><td>73% - &lt;76%</td><td>C+</td><td>2.30</td></tr>
+            <tr><td>70% - &lt;73%</td><td>C</td><td>2.00</td></tr>
+            <tr><td>67% - &lt;70%</td><td>C-</td><td>1.70</td></tr>
+            <tr><td>64% - &lt;67%</td><td>D+</td><td>1.30</td></tr>
+            <tr><td>60% - &lt;64%</td><td>D</td><td>1.00</td></tr>
+            <tr><td>Below 60%</td><td>F / FW</td><td>0.00</td></tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="add-course-container">
   <h3>Add a Custom Course</h3>
   <div class="add-course-form">
-    <label>Course Name <input type="text" id="newCourseName" placeholder="e.g., Advanced Propulsion"></label>
-    <label>Course Code <input type="text" id="newCourseCode" placeholder="e.g., AERS501"></label>
+    <label>Name <input type="text" id="newCourseName" placeholder="e.g., Advanced Propulsion"></label>
+    <label>Code <input type="text" id="newCourseCode" placeholder="e.g., AERS501"></label>
     <label>Credits
       <select id="newCourseCredits">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3" selected>3</option>
+        <option value="4">4</option>
       </select>
     </label>
     <label>Semester <select id="newCourseSemester"></select></label>
@@ -463,45 +340,43 @@
   <!-- Planner content is generated by JavaScript -->
 </div>
 
-<!-- === STEP 2: ADDED ID TO THIS CONTAINER === -->
 <div class="suggestion-box-container" id="suggestionBox">
   <h3>Suggestions & Bug Reports</h3>
-  <p>Is your major not in the list, or found a bug in a subject's name or credits? Let me know!</p>
+  <p>Found a bug or incorrect data? Let me know!</p>
   <form id="suggestionForm">
     <input type="hidden" name="_subject" value="Course Planner Suggestion/Bug Report">
-    <div class="suggestion-form-group">
-      <label for="requestType">Request Type:</label>
-      <select id="requestType" name="requestType" required>
+    <label for="requestType">Request Type:</label>
+    <select id="requestType" name="requestType" required>
         <option value="" disabled selected>-- Select an option --</option>
         <option value="Add New Major">Add a New Major</option>
-        <option value="Report a Bug / Incorrect Data">Report a Bug/Incorrect Data</option>
+        <option value="Report a Bug">Report a Bug/Incorrect Data</option>
         <option value="Other Suggestion">Other Suggestion</option>
-      </select>
-    </div>
-    <div class="suggestion-form-group">
-      <label for="suggestionMessage">Your Message:</label>
-      <textarea id="suggestionMessage" name="suggestionMessage" rows="5" placeholder="Please provide as much detail as possible. &#10;If reporting a bug, mention the major, subject name, and what's wrong (e.g., 'AEM, CHES001, credits should be 3 not 2')." required></textarea>
-    </div>
+    </select>
+    <label for="suggestionMessage">Your Message:</label>
+    <textarea id="suggestionMessage" name="suggestionMessage" placeholder="Please provide details..." required></textarea>
     <button type="submit" class="control-button">Send Suggestion</button>
-    <p id="suggestionStatus" style="text-align: center; margin-top: 15px; font-weight: bold; min-height: 1.2em;"></p>
+    <p id="suggestionStatus" style="text-align: center; margin-top: 15px; font-weight: bold;"></p>
   </form>
 </div>
-<!-- === END OF NEW HTML === -->
 
 <footer>
   <p>
     <a href="mailto:mohamed.nabil.seddik@gmail.com">mohamed.nabil.seddik@gmail.com</a> |
-    <a href="https://www.linkedin.com/in/mohamed-nabil-seddik/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a> |
+    <a href="https://www.linkedin.com/in/mohamed-nabil-seddik/" target="_blank">LinkedIn Profile</a>
   </p>
 </footer>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // === GLOBAL VARIABLES AND DATA ===
+    // === GPA MAP ===
     const gpaMap = {
-      'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7,
-      'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0, 'F': 0.0
+      'A+': 4.00, 'A': 4.00, 'A-': 3.70, 
+      'B+': 3.30, 'B': 3.00, 'B-': 2.70,
+      'C+': 2.30, 'C': 2.00, 'C-': 1.70, 
+      'D+': 1.30, 'D': 1.00, 
+      'F': 0.00, 'FW': 0.00
     };
+
     const semesterTitles = [
       "Semester 1", "Semester 2", "Summer 1",
       "Semester 3", "Semester 4", "Summer 2",
@@ -510,6 +385,7 @@
       "Semester 9", "Semester 10"
     ];
 
+    // ... (DATA OBJECT SAME AS BEFORE) ...
     const majorCourseData = {
       "Aeronautical & Aviation (AEM)": [
         { id: "aem-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "aem-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus I", credits: 3 }, { id: "aem-c3", semester: "Semester 1", code: "PHYS001", name: "Mech. Prop. of Matter", credits: 3 }, { id: "aem-c4", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "aem-c5", semester: "Semester 1", code: "INTS004", name: "Information Technology", credits: 2 }, { id: "aem-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency & Capacity", credits: 1 }, { id: "aem-c7", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "aem-c8", semester: "Semester 1", code: "GENS001", name: "Critical & Creative Thinking", credits: 2 },
@@ -535,6 +411,18 @@
         { id: "aet-c47", semester: "Semester 7", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "aet-c48", semester: "Semester 7", code: "ARCS470", name: "Professional Practice for Arch.", credits: 2 }, { id: "aet-c49", semester: "Semester 7", code: "AETS481", name: "Graduation Project-1", credits: 1 }, { id: "aet-c50", semester: "Semester 7", code: "ARCS406", name: "Architectural Design-6", credits: 4 }, { id: "aet-c51", semester: "Semester 7", code: "ARCS402", name: "Building Construction-4", credits: 4 }, { id: "aet-c52", semester: "Semester 7", code: "ARCS403", name: "Integrated Building Systems", credits: 3 }, { id: "aet-c53", semester: "Semester 7", code: "ARCSXXX", name: "Major Elective Course", credits: 3 },
         { id: "aet-c54", semester: "Semester 8", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "aet-c55", semester: "Semester 8", code: "GENS2XX", name: "UR Free Elective", credits: 2 }, { id: "aet-c56", semester: "Semester 8", code: "AETS482", name: "Graduation Project - 2", credits: 3 }, { id: "aet-c57", semester: "Semester 8", code: "ARCS48X", name: "GP Independent Studies", credits: 3 }, { id: "aet-c58", semester: "Semester 8", code: "ARCS405", name: "Building Construction-5", credits: 4 }, { id: "aet-c59", semester: "Semester 8", code: "ARCSXXX", name: "Major Elective Course PE3", credits: 3 }, { id: "aet-c60", semester: "Semester 8", code: "CVES402", name: "Surveying and Foundation", credits: 2 }
       ],
+      "Biomedical & Healthcare (BDE)": [
+        { id: "bde-c1", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "bde-c2", semester: "Semester 1", code: "PHYS001", name: "Mech. Properties of Matter", credits: 3 }, { id: "bde-c3", semester: "Semester 1", code: "MTHS002", name: "Calculus I", credits: 3 }, { id: "bde-c4", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "bde-c5", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "bde-c6", semester: "Semester 1", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "bde-c7", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "bde-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
+        { id: "bde-c9", semester: "Semester 2", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "bde-c10", semester: "Semester 2", code: "GENSxxx", name: "Elective EA-EB", credits: 2 }, { id: "bde-c11", semester: "Semester 2", code: "MTHS003", name: "Calculus II", credits: 3 }, { id: "bde-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics - Statics", credits: 2 }, { id: "bde-c13", semester: "Semester 2", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "bde-c14", semester: "Semester 2", code: "SBES121", name: "Medical Physics", credits: 3 }, { id: "bde-c15", semester: "Semester 2", code: "SBES120", name: "Intro to Biomedical Eng.", credits: 2 }, { id: "bde-c16", semester: "Semester 2", code: "SBES122", name: "Anatomy & Physiology for Eng.", credits: 2 },
+        { id: "bde-c17", semester: "Semester 3", code: "GENSxxx", name: "Elective EA-EB", credits: 2 }, { id: "bde-c18", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "bde-c19", semester: "Semester 3", code: "CMPS102", name: "Programming Techniques", credits: 3 }, { id: "bde-c20", semester: "Semester 3", code: "SBES131", name: "Clinical Engineering", credits: 2 }, { id: "bde-c21", semester: "Semester 3", code: "ELCS103", name: "Circuit Analysis", credits: 3 }, { id: "bde-c22", semester: "Semester 3", code: "SBES130", name: "Basics of Computer Architecture", credits: 3 }, { id: "bde-c23", semester: "Semester 3", code: "MTHS004", name: "Discrete Mathematics", credits: 3 },
+        { id: "bde-c24", semester: "Semester 4", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "bde-c25", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability & Stats", credits: 3 }, { id: "bde-c26", semester: "Semester 4", code: "CMPS103", name: "Data Structures & Algorithms", credits: 3 }, { id: "bde-c27", semester: "Semester 4", code: "SBES140", name: "Computer Graphics & Visualization", credits: 3 }, { id: "bde-c28", semester: "Semester 4", code: "ELCS123", name: "Basic Electronics & Digital Design", credits: 3 }, { id: "bde-c29", semester: "Semester 4", code: "SBES141", name: "Analytical & Lab Instruments", credits: 2 }, { id: "bde-c30", semester: "Semester 4", code: "SBES240", name: "Requirements Eng. for Digital Health", credits: 2 },
+        { id: "bde-c31", semester: "Summer 2", code: "BDES281", name: "Industrial Training 1", credits: 1 },
+        { id: "bde-c32", semester: "Semester 5", code: "SBES150", name: "Database Systems for Medical Data", credits: 3 }, { id: "bde-c33", semester: "Semester 5", code: "SBES151", name: "Measurements & Experiments", credits: 2 }, { id: "bde-c34", semester: "Semester 5", code: "SBES152", name: "Biomedical Signal Processing", credits: 3 }, { id: "bde-c35", semester: "Semester 5", code: "SBES153", name: "Biomedical Transducers", credits: 3 }, { id: "bde-c36", semester: "Semester 5", code: "SBES250", name: "Operations Research in Healthcare", credits: 3 }, { id: "bde-c37", semester: "Semester 5", code: "SBES251", name: "Entrepreneurship in Healthcare", credits: 2 }, { id: "bde-c38", semester: "Semester 5", code: "SBES252", name: "Algorithms in Medicine", credits: 3 },
+        { id: "bde-c39", semester: "Semester 6", code: "BDES280", name: "Engineering Seminar", credits: 1 }, { id: "bde-c40", semester: "Semester 6", code: "SBES160", name: "Medical Image Processing", credits: 3 }, { id: "bde-c41", semester: "Semester 6", code: "SBES161", name: "Medical Monitors & Life Support", credits: 3 }, { id: "bde-c42", semester: "Semester 6", code: "SBES162", name: "Embedded Systems in Medical Eq.", credits: 3 }, { id: "bde-c43", semester: "Semester 6", code: "CMPS203", name: "Software Engineering", credits: 3 }, { id: "bde-c44", semester: "Semester 6", code: "SBES260", name: "Medical Distributed App Dev", credits: 3 }, { id: "bde-c45", semester: "Semester 6", code: "SBES261", name: "Healthcare Facilities Planning", credits: 3 },
+        { id: "bde-c46", semester: "Summer 3", code: "BDES381", name: "Industrial Training 2", credits: 2 },
+        { id: "bde-c47", semester: "Semester 7", code: "GENSxxx", name: "Elective EA-EB (UR E4/5)", credits: 2 }, { id: "bde-c48", semester: "Semester 7", code: "BDES481", name: "Graduation Project 1", credits: 1 }, { id: "bde-c49", semester: "Semester 7", code: "SBES180", name: "Medical Imaging Modalities I", credits: 2 }, { id: "bde-c50", semester: "Semester 7", code: "SBES271", name: "Healthcare Information Systems", credits: 2 }, { id: "bde-c51", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 1", credits: 3 }, { id: "bde-c52", semester: "Semester 7", code: "SBES262", name: "Accreditations", credits: 3 }, { id: "bde-c53", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 2", credits: 3 }, { id: "bde-c61", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 3", credits: 3},
+        { id: "bde-c54", semester: "Semester 8", code: "GENSxxx", name: "Elective EA-EB (UR E4/5)", credits: 2 }, { id: "bde-c55", semester: "Semester 8", code: "BDES482", name: "Graduation Project 2", credits: 3 }, { id: "bde-c56", semester: "Semester 8", code: "SBES180", name: "Medical Imaging Modalities II", credits: 2 }, { id: "bde-c57", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 4", credits: 3 }, { id: "bde-c58", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 5", credits: 3 }, { id: "bde-c59", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 6", credits: 3 }, { id: "bde-c60", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 7", credits: 3 }
+      ],
       "Communication & Computer (CCEC)": [
         { id: "ccec-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "ccec-c2", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 }, { id: "ccec-c3", semester: "Semester 1", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "ccec-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "ccec-c5", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics - Dynamics", credits: 3 }, { id: "ccec-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "ccec-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "ccec-c8", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 },
         { id: "ccec-c9", semester: "Semester 2", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "ccec-c10", semester: "Semester 2", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "ccec-c11", semester: "Semester 2", code: "PHYS102", name: "Modern Physics", credits: 3 }, { id: "ccec-c12", semester: "Semester 2", code: "CMPS102", name: "Programming Techniques", credits: 3 }, { id: "ccec-c13", semester: "Semester 2", code: "MTHS004", name: "Discrete Math.", credits: 3 }, { id: "ccec-c14", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics - Statics", credits: 2 }, { id: "ccec-c15", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 },
@@ -556,63 +444,6 @@
         { id: "ccee-c45", semester: "Summer 3", code: "CCES381", name: "Industrial Training-2", credits: 2 },
         { id: "ccee-c46", semester: "Semester 7", code: "CMPS405", name: "Computer Networks", credits: 3 }, { id: "ccee-c47", semester: "Semester 7", code: "EECSXXX", name: "Elective - 1", credits: 3 }, { id: "ccee-c48", semester: "Semester 7", code: "CCES481", name: "GP-1", credits: 1 }, { id: "ccee-c49", semester: "Semester 7", code: "EECS301", name: "Electronics-3", credits: 3 }, { id: "ccee-c50", semester: "Semester 7", code: "EECSXXX", name: "Elective - 2", credits: 3 }, { id: "ccee-c51", semester: "Semester 7", code: "EECSXXX", name: "Elective - 3", credits: 3 }, { id: "ccee-c52", semester: "Semester 7", code: "MTHS114", name: "Numerical Analysis", credits: 3 },
         { id: "ccee-c53", semester: "Semester 8", code: "EECSXXX", name: "Elective - 4", credits: 3 }, { id: "ccee-c54", semester: "Semester 8", code: "EECSXXX", name: "Elective - 5", credits: 3 }, { id: "ccee-c55", semester: "Semester 8", code: "CCES481", name: "GP-2", credits: 3 }, { id: "ccee-c56", semester: "Semester 8", code: "EECSXXX", name: "Elective - 6", credits: 3 }, { id: "ccee-c57", semester: "Semester 8", code: "EECSXXX", name: "Elective - 7", credits: 3 }, { id: "ccee-c58", semester: "Semester 8", code: "EECS404", name: "Control-2", credits: 4}                ],
-      "Biomedical & Healthcare (BDE)": [
-        { id: "bde-c1", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "bde-c2", semester: "Semester 1", code: "PHYS001", name: "Mech. Properties of Matter", credits: 3 }, { id: "bde-c3", semester: "Semester 1", code: "MTHS002", name: "Calculus I", credits: 3 }, { id: "bde-c4", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "bde-c5", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "bde-c6", semester: "Semester 1", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "bde-c7", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "bde-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
-        { id: "bde-c9", semester: "Semester 2", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "bde-c10", semester: "Semester 2", code: "GENSxxx", name: "Elective EA-EB", credits: 2 }, { id: "bde-c11", semester: "Semester 2", code: "MTHS003", name: "Calculus II", credits: 3 }, { id: "bde-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics - Statics", credits: 2 }, { id: "bde-c13", semester: "Semester 2", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "bde-c14", semester: "Semester 2", code: "SBES121", name: "Medical Physics", credits: 3 }, { id: "bde-c15", semester: "Semester 2", code: "SBES120", name: "Intro to Biomedical Eng.", credits: 2 }, { id: "bde-c16", semester: "Semester 2", code: "SBES122", name: "Anatomy & Physiology for Eng.", credits: 2 },
-        { id: "bde-c17", semester: "Semester 3", code: "GENSxxx", name: "Elective EA-EB", credits: 2 }, { id: "bde-c18", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "bde-c19", semester: "Semester 3", code: "CMPS102", name: "Programming Techniques", credits: 3 }, { id: "bde-c20", semester: "Semester 3", code: "SBES131", name: "Clinical Engineering", credits: 2 }, { id: "bde-c21", semester: "Semester 3", code: "ELCS103", name: "Circuit Analysis", credits: 3 }, { id: "bde-c22", semester: "Semester 3", code: "SBES130", name: "Basics of Computer Architecture", credits: 3 }, { id: "bde-c23", semester: "Semester 3", code: "MTHS004", name: "Discrete Mathematics", credits: 3 },
-        { id: "bde-c24", semester: "Semester 4", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "bde-c25", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability & Stats", credits: 3 }, { id: "bde-c26", semester: "Semester 4", code: "CMPS103", name: "Data Structures & Algorithms", credits: 3 }, { id: "bde-c27", semester: "Semester 4", code: "SBES140", name: "Computer Graphics & Visualization", credits: 3 }, { id: "bde-c28", semester: "Semester 4", code: "ELCS123", name: "Basic Electronics & Digital Design", credits: 3 }, { id: "bde-c29", semester: "Semester 4", code: "SBES141", name: "Analytical & Lab Instruments", credits: 2 }, { id: "bde-c30", semester: "Semester 4", code: "SBES240", name: "Requirements Eng. for Digital Health", credits: 2 },
-        { id: "bde-c31", semester: "Summer 2", code: "BDES281", name: "Industrial Training 1", credits: 1 },
-        { id: "bde-c32", semester: "Semester 5", code: "SBES150", name: "Database Systems for Medical Data", credits: 3 }, { id: "bde-c33", semester: "Semester 5", code: "SBES151", name: "Measurements & Experiments", credits: 2 }, { id: "bde-c34", semester: "Semester 5", code: "SBES152", name: "Biomedical Signal Processing", credits: 3 }, { id: "bde-c35", semester: "Semester 5", code: "SBES153", name: "Biomedical Transducers", credits: 3 }, { id: "bde-c36", semester: "Semester 5", code: "SBES250", name: "Operations Research in Healthcare", credits: 3 }, { id: "bde-c37", semester: "Semester 5", code: "SBES251", name: "Entrepreneurship in Healthcare", credits: 2 }, { id: "bde-c38", semester: "Semester 5", code: "SBES252", name: "Algorithms in Medicine", credits: 3 },
-        { id: "bde-c39", semester: "Semester 6", code: "BDES280", name: "Engineering Seminar", credits: 1 }, { id: "bde-c40", semester: "Semester 6", code: "SBES160", name: "Medical Image Processing", credits: 3 }, { id: "bde-c41", semester: "Semester 6", code: "SBES161", name: "Medical Monitors & Life Support", credits: 3 }, { id: "bde-c42", semester: "Semester 6", code: "SBES162", name: "Embedded Systems in Medical Eq.", credits: 3 }, { id: "bde-c43", semester: "Semester 6", code: "CMPS203", name: "Software Engineering", credits: 3 }, { id: "bde-c44", semester: "Semester 6", code: "SBES260", name: "Medical Distributed App Dev", credits: 3 }, { id: "bde-c45", semester: "Semester 6", code: "SBES261", name: "Healthcare Facilities Planning", credits: 3 },
-        { id: "bde-c46", semester: "Summer 3", code: "BDES381", name: "Industrial Training 2", credits: 2 },
-        { id: "bde-c47", semester: "Semester 7", code: "GENSxxx", name: "Elective EA-EB (UR E4/5)", credits: 2 }, { id: "bde-c48", semester: "Semester 7", code: "BDES481", name: "Graduation Project 1", credits: 1 }, { id: "bde-c49", semester: "Semester 7", code: "SBES180", name: "Medical Imaging Modalities I", credits: 2 }, { id: "bde-c50", semester: "Semester 7", code: "SBES271", name: "Healthcare Information Systems", credits: 2 }, { id: "bde-c51", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 1", credits: 3 }, { id: "bde-c52", semester: "Semester 7", code: "SBES262", name: "Accreditations", credits: 3 }, { id: "bde-c53", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 2", credits: 3 }, { id: "bde-c61", semester: "Semester 7", code: "SBES3XX", name: "Major Elective 3", credits: 3},
-        { id: "bde-c54", semester: "Semester 8", code: "GENSxxx", name: "Elective EA-EB (UR E4/5)", credits: 2 }, { id: "bde-c55", semester: "Semester 8", code: "BDES482", name: "Graduation Project 2", credits: 3 }, { id: "bde-c56", semester: "Semester 8", code: "SBES180", name: "Medical Imaging Modalities II", credits: 2 }, { id: "bde-c57", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 4", credits: 3 }, { id: "bde-c58", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 5", credits: 3 }, { id: "bde-c59", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 6", credits: 3 }, { id: "bde-c60", semester: "Semester 8", code: "SBES4xx", name: "Major Elective 7", credits: 3 }
-      ],
-      "Mechanical Design (MDE)": [
-        { id: "mde-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry For Engineers", credits: 2 }, { id: "mde-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "mde-c3", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "mde-c4", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics Dynamics", credits: 3 }, { id: "mde-c5", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "mde-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "mde-c7", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "mde-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
-        { id: "mde-c9", semester: "Semester 2", code: "MTHS005", name: "Intro to Probability and Stats", credits: 3 }, { id: "mde-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "mde-c11", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "mde-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "mde-c13", semester: "Semester 2", code: "MCNS101", name: "Thermodynamics", credits: 3 }, { id: "mde-c14", semester: "Semester 2", code: "MDPS001", name: "Fundamentals of Manufacturing", credits: 2 }, { id: "mde-c15", semester: "Semester 2", code: "MDPS132", name: "Materials Science", credits: 3 },
-        { id: "mde-c16", semester: "Semester 3", code: "GENSOOX", name: "E-0 (Elective)", credits: 2 }, { id: "mde-c17", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "mde-c18", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "mde-c19", semester: "Semester 3", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "mde-c20", semester: "Semester 3", code: "MDPS261", name: "Stress Analysis", credits: 3 }, { id: "mde-c21", semester: "Semester 3", code: "MDPS241", name: "Manufacturing Processes I", credits: 3 }, { id: "mde-c22", semester: "Semester 3", code: "MDPS217", name: "Machine Drawing", credits: 3 },
-        { id: "mde-c23", semester: "Semester 4", code: "MCNS202", name: "Fluid Mechanics", credits: 3 }, { id: "mde-c24", semester: "Semester 4", code: "MTHS104", name: "Numerical Analysis", credits: 3 }, { id: "mde-c25", semester: "Semester 4", code: "EPES201", name: "Electrical Eng. Fundamentals", credits: 3 }, { id: "mde-c26", semester: "Semester 4", code: "MDES280", name: "Seminar", credits: 1 }, { id: "mde-c27", semester: "Semester 4", code: "MDPS251", name: "Kinematics of Machine", credits: 3 }, { id: "mde-c28", semester: "Semester 4", code: "MDPS232", name: "Engineering Materials", credits: 3 }, { id: "mde-c29", semester: "Semester 4", code: "MDPS242", name: "Manufacturing Processes II", credits: 3 },
-        { id: "mde-c30", semester: "Summer 2", code: "MDES281", name: "Industrial Training-1", credits: 1 },
-        { id: "mde-c31", semester: "Semester 5", code: "EPES303", name: "Electric Drive Systems", credits: 3 }, { id: "mde-c32", semester: "Semester 5", code: "GENS120", name: "Elective E-A (Econ & Acc)", credits: 2 }, { id: "mde-c33", semester: "Semester 5", code: "MCNS326", name: "Heat Transfer", credits: 3 }, { id: "mde-c34", semester: "Semester 5", code: "MDPS355", name: "Dynamics of Machine", credits: 3 }, { id: "mde-c35", semester: "Semester 5", code: "MDPS352", name: "Machine Design Components", credits: 3 }, { id: "mde-c36", semester: "Semester 5", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "mde-c37", semester: "Semester 5", code: "MDPS360", name: "Fundamentals of Industrial Eng.", credits: 3 },
-        { id: "mde-c38", semester: "Semester 6", code: "MDPS371", name: "Mechanical Vibrations", credits: 3 }, { id: "mde-c39", semester: "Semester 6", code: "MDPS372", name: "Control System Dynamics", credits: 3 }, { id: "mde-c40", semester: "Semester 6", code: "MDPS354", name: "Machine and System Design", credits: 4 }, { id: "mde-c41", semester: "Semester 6", code: "MDPS363", name: "Finite Element", credits: 3 }, { id: "mde-c42", semester: "Semester 6", code: "MDPS370", name: "Mechanics of Solids", credits: 3 }, { id: "mde-c43", semester: "Semester 6", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 1", credits: 3 },
-        { id: "mde-c44", semester: "Summer 3", code: "MDES381", name: "Industrial Training-2", credits: 2 },
-        { id: "mde-c45", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 2", credits: 3 }, { id: "mde-c46", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 3", credits: 3 }, { id: "mde-c47", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 4", credits: 3 }, { id: "mde-c48", semester: "Semester 7", code: "EPES303", name: "Instrumentation", credits: 3 }, { id: "mde-c49", semester: "Semester 7", code: "MDPS455", name: "Tribology & Bearings", credits: 3 }, { id: "mde-c50", semester: "Semester 7", code: "MDPS461", name: "Applied Manufacturing CAD/CAM", credits: 3 }, { id: "mde-c51", semester: "Semester 7", code: "MDES481", name: "Graduation Project 1", credits: 1 },
-        { id: "mde-c52", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 5", credits: 3 }, { id: "mde-c53", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 6", credits: 3 }, { id: "mde-c54", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 7", credits: 3 }, { id: "mde-c55", semester: "Semester 8", code: "GENS30X", name: "E-1 (Elective)", credits: 2 }, { id: "mde-c56", semester: "Semester 8", code: "MDPS464", name: "Failure Analysis", credits: 2 }, { id: "mde-c57", semester: "Semester 8", code: "MDPS410", name: "Mechanical Lab", credits: 2 }, { id: "mde-c58", semester: "Semester 8", code: "MDES482", name: "Graduation Project 2", credits: 3 }
-      ],
-      "Mechatronics (MEE)": [
-        { id: "mee-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "mee-c2", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "mee-c3", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "mee-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "mee-c5", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics Dynamics", credits: 3 }, { id: "mee-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "mee-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "mee-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
-        { id: "mee-c9", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "mee-c10", semester: "Semester 2", code: "MDPS133", name: "Materials for Mechatronics", credits: 3 }, { id: "mee-c11", semester: "Semester 2", code: "MCNS101", name: "Thermodynamics", credits: 3 }, { id: "mee-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "mee-c13", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "mee-c14", semester: "Semester 2", code: "MCNS202", name: "Fluid Mechanics", credits: 3 }, { id: "mee-c15", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 },
-        { id: "mee-c16", semester: "Semester 3", code: "GENS120", name: "Elective E-A (Econ & Acc)", credits: 2 }, { id: "mee-c17", semester: "Semester 3", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "mee-c18", semester: "Semester 3", code: "MDPS217", name: "Machine Drawing", credits: 3 }, { id: "mee-c19", semester: "Semester 3", code: "MDPS261", name: "Stress Analysis", credits: 3 }, { id: "mee-c20", semester: "Semester 3", code: "MDPS241", name: "Manufacturing Processes I", credits: 3 }, { id: "mee-c21", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "mee-c22", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 },
-        { id: "mee-c23", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability & Stats", credits: 3 }, { id: "mee-c24", semester: "Semester 4", code: "EPES201", name: "Electrical Eng. Fundamentals", credits: 3 }, { id: "mee-c25", semester: "Semester 4", code: "CMPS118", name: "Intro to Logic Design", credits: 3 }, { id: "mee-c26", semester: "Semester 4", code: "MDPS251", name: "Kinematics of Machine", credits: 3 }, { id: "mee-c27", semester: "Semester 4", code: "MDPS242", name: "Manufacturing Processes II", credits: 3 }, { id: "mee-c28", semester: "Semester 4", code: "MTHS114", name: "Numerical Analysis", credits: 3 }, { id: "mee-c29", semester: "Semester 4", code: "MEES280", name: "Engineering Seminar", credits: 1 },
-        { id: "mee-c30", semester: "Summer 2", code: "MEES281", name: "Industrial Training-1", credits: 1 },
-        { id: "mee-c31", semester: "Semester 5", code: "GENSOXX", name: "E-0 (Elective)", credits: 2 }, { id: "mee-c32", semester: "Semester 5", code: "GENS3XX", name: "E-1 (Elective)", credits: 2 }, { id: "mee-c33", semester: "Semester 5", code: "EPES303", name: "Electric Drive Systems", credits: 3 }, { id: "mee-c34", semester: "Semester 5", code: "MDPS355", name: "Dynamics of Machine", credits: 3 }, { id: "mee-c35", semester: "Semester 5", code: "MCNS326", name: "Heat Transfer", credits: 3 }, { id: "mee-c36", semester: "Semester 5", code: "MDPS352", name: "Machine Design", credits: 3 }, { id: "mee-c37", semester: "Semester 5", code: "CMPS102", name: "Programming Techniques", credits: 3 },
-        { id: "mee-c38", semester: "Semester 6", code: "MDPS251", name: "Robotics Engineering", credits: 3 }, { id: "mee-c39", semester: "Semester 6", code: "EPES302", name: "Industrial Instrumentation", credits: 3 }, { id: "mee-c40", semester: "Semester 6", code: "MDPS372", name: "Control System Dynamics", credits: 3 }, { id: "mee-c41", semester: "Semester 6", code: "MDPS355", name: "Design of Mechatronics Systems", credits: 4 }, { id: "mee-c42", semester: "Semester 6", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 1 (E2)", credits: 3 }, { id: "mee-c43", semester: "Semester 6", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 2 (E2)", credits: 3 },
-        { id: "mee-c44", semester: "Summer 3", code: "MEES381", name: "Industrial Training-2", credits: 2 },
-        { id: "mee-c45", semester: "Semester 7", code: "CMPS118", name: "Microprocessor Systems", credits: 3 }, { id: "mee-c46", semester: "Semester 7", code: "EPES302", name: "Programmable Logic Control", credits: 3 }, { id: "mee-c47", semester: "Semester 7", code: "MDPS372", name: "Automatic Control I", credits: 3 }, { id: "mee-c48", semester: "Semester 7", code: "EPES305", name: "Industrial Communications & Network", credits: 3 }, { id: "mee-c49", semester: "Semester 7", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 3 (E2)", credits: 3 }, { id: "mee-c50", semester: "Semester 7", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 4 (E3)", credits: 3 }, { id: "mee-c51", semester: "Semester 7", code: "XXXSXXX", name: "Graduation Project 1", credits: 1 },                    { id: "mee-c52", semester: "Semester 8", code: "CMPS201", name: "Embedded systems", credits: 2 }, { id: "mee-c53", semester: "Semester 8", code: "MDPS371", name: "Mechanical Vibrations", credits: 3 }, { id: "mee-c54", semester: "Semester 8", code: "MDPS470", name: "Mechatronics Lab", credits: 2 }, { id: "mee-c55", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 5 (E2)", credits: 3 }, { id: "mee-c56", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 6 (E2)", credits: 3 }, { id: "mee-c57", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 7 (E3)", credits: 3 }, { id: "mee-c58", semester: "Semester 8", code: "MEES482", name: "GRADUATION PROJECT 2", credits: 3 }
-      ],
-      "Petrochemical Process (PPS)": [
-        { id: "pps-c1", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "pps-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "pps-c3", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "pps-c4", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics Dynamics", credits: 3 }, { id: "pps-c5", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "pps-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "pps-c7", semester: "Semester 1", code: "CHES001", name: "Chemistry For Engineers", credits: 2 }, { id: "pps-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
-        { id: "pps-c9", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "pps-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "pps-c11", semester: "Semester 2", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "pps-c12", semester: "Semester 2", code: "EMC002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "pps-c13", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "pps-c14", semester: "Semester 2", code: "CHES101", name: "Organic Chemistry-1", credits: 2 }, { id: "pps-c15", semester: "Semester 2", code: "CHES102", name: "Chemical Engineering Fundamentals", credits: 3 }, { id: "pps-c16", semester: "Semester 2", code: "CHES103", name: "Material Science for Petrochemical Eng.", credits: 2 },
-        { id: "pps-c17", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "pps-c18", semester: "Semester 3", code: "PES201", name: "Intro to Petroleum Industry", credits: 3 }, { id: "pps-c19", semester: "Semester 3", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "pps-c20", semester: "Semester 3", code: "CHES202", name: "Physical Chemistry -1", credits: 2 }, { id: "pps-c21", semester: "Semester 3", code: "PES202", name: "General Geology", credits: 3 }, { id: "pps-c22", semester: "Semester 3", code: "CHES201", name: "Fluid Mechanics", credits: 3 }, { id: "pps-c23", semester: "Semester 3", code: "INTS201", name: "Electrical Engineering", credits: 3 },
-        { id: "pps-c24", semester: "Semester 4", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "pps-c25", semester: "Semester 4", code: "CHES205", name: "Computer Applications in Petrochemical", credits: 2 }, { id: "pps-c26", semester: "Semester 4", code: "CHES206", name: "Organic Chemistry-2", credits: 3 }, { id: "pps-c27", semester: "Semester 4", code: "CHES204", name: "Thermodynamics and Combustion", credits: 3 }, { id: "pps-c28", semester: "Semester 4", code: "CHES203", name: "Physical Chemistry-2", credits: 3 }, { id: "pps-c29", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability and Stats", credits: 3 }, { id: "pps-c30", semester: "Semester 4", code: "E-1", name: "University Elective", credits: 2 },
-        { id: "pps-c31", semester: "Summer 2", code: "PPSS281", name: "Industrial Training-1", credits: 1 },
-        { id: "pps-c32", semester: "Semester 5", code: "MDPS301", name: "Stress Analysis and Vessel Design", credits: 3 }, { id: "pps-c33", semester: "Semester 5", code: "PES301", name: "Reservoir Engineering", credits: 2 }, { id: "pps-c34", semester: "Semester 5", code: "CHES302", name: "Intro to Machine Learning", credits: 3 }, { id: "pps-c35", semester: "Semester 5", code: "CHES301", name: "Unit Operations", credits: 3 }, { id: "pps-c36", semester: "Semester 5", code: "PPSS280", name: "Engineering Seminar", credits: 1 }, { id: "pps-c37", semester: "Semester 5", code: "E2", name: "Elective - 1", credits: 3 }, { id: "pps-c38", semester: "Semester 5", code: "E3", name: "Elective - 2", credits: 4 },
-        { id: "pps-c39", semester: "Semester 6", code: "CHES303", name: "Cryogenic Processes", credits: 2 }, { id: "pps-c40", semester: "Semester 6", code: "CHES304", name: "Heat Transfer and Applications", credits: 3 }, { id: "pps-c41", semester: "Semester 6", code: "CHES307", name: "Application of Machine Learning", credits: 3 }, { id: "pps-c42", semester: "Semester 6", code: "CHES305", name: "Chemical Reactor Design", credits: 3 }, { id: "pps-c43", semester: "Semester 6", code: "GENS120", name: "Fundamentals of Econ & Acc", credits: 2 }, { id: "pps-c44", semester: "Semester 6", code: "CHES306", name: "Process Control", credits: 3 }, { id: "pps-c45", semester: "Semester 6", code: "E4", name: "Elective -E3", credits: 3 },
-        { id: "pps-c46", semester: "Summer 3", code: "PPSS381", name: "Industrial Training-2", credits: 2 },
-        { id: "pps-c47", semester: "Semester 7", code: "PES401", name: "Petroleum Production Engineering", credits: 3 }, { id: "pps-c48", semester: "Semester 7", code: "CHES401", name: "Eng. Equipment Design", credits: 3 }, { id: "pps-c49", semester: "Semester 7", code: "CHES402", name: "Petrochemicals from Oil and Gas", credits: 3 }, { id: "pps-c50", semester: "Semester 7", code: "CHES403", name: "Petroleum Refining Engineering", credits: 3 }, { id: "pps-c51", semester: "Semester 7", code: "CHES404", name: "Process and Plant Design", credits: 3 }, { id: "pps-c52", semester: "Semester 7", code: "CHES405", name: "Mass Transfer", credits: 3 }, { id: "pps-c53", semester: "Semester 7", code: "PPSS481", name: "Graduation Project - 1", credits: 1 },
-        { id: "pps-c54", semester: "Semester 8", code: "E4", name: "Elective -4", credits: 3 }, { id: "pps-c55", semester: "Semester 8", code: "E5", name: "Elective -5", credits: 3 }, { id: "pps-c56", semester: "Semester 8", code: "E5", name: "Elective -6", credits: 3 }, { id: "pps-c57", semester: "Semester 8", code: "METS401", name: "Electrochemistry and Corrosion", credits: 3 }, { id: "pps-c58", semester: "Semester 8", code: "CHES406", name: "Economics of Oil and Gas", credits: 2 }, { id: "pps-c59", semester: "Semester 8", code: "CHES407", name: "Separation Processes", credits: 2 }, { id: "pps-c60", semester: "Semester 8", code: "PPSS482", name: "Graduation Project - 2", credits: 3 }                ],
-      "Electrical Energy (EEE)": [
-        { id: "eee-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "eee-c2", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "eee-c3", semester: "Semester 1", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "eee-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "eee-c5", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "eee-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "eee-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "eee-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
-        { id: "eee-c9", semester: "Semester 2", code: "PHYS102", name: "Modern Physics", credits: 3 }, { id: "eee-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "eee-c11", semester: "Semester 2", code: "CMPS118", name: "Introduction to Logic Design", credits: 3 }, { id: "eee-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics - Statics", credits: 2 }, { id: "eee-c13", semester: "Semester 2", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "eee-c14", semester: "Semester 2", code: "INTS125", name: "Intro to Mechanical Eng.", credits: 3 }, { id: "eee-c15", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 },
-        { id: "eee-c16", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "eee-c17", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "eee-c18", semester: "Semester 3", code: "CVES125", name: "Civil Engineering", credits: 2 }, { id: "eee-c19", semester: "Semester 3", code: "CMPS102", name: "Programming Techniques", credits: 3 }, { id: "eee-c20", semester: "Semester 3", code: "EPES204", name: "Energy Conversion", credits: 3 }, { id: "eee-c21", semester: "Semester 3", code: "EECS102", name: "Cicruits-1", credits: 3 }, { id: "eee-c22", semester: "Semester 3", code: "GENSOXX", name: "Elective Course UR", credits: 2 },
-        { id: "eee-c23", semester: "Semester 4", code: "EECS102", name: "Cicruits-2", credits: 3 }, { id: "eee-c24", semester: "Semester 4", code: "EECS112", name: "Electronics-1: Basic Circuits", credits: 3 }, { id: "eee-c25", semester: "Semester 4", code: "EECS101", name: "Basic Laboratory", credits: 2 }, { id: "eee-c26", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability and Stats", credits: 3 }, { id: "eee-c27", semester: "Semester 4", code: "EECS203", name: "Signal Analysis", credits: 3 }, { id: "eee-c28", semester: "Semester 4", code: "EPES203", name: "Electromagnetic Fields", credits: 3 }, { id: "eee-c29", semester: "Semester 4", code: "GENS120", name: "Fundamentals of Econ & Acc", credits: 2 },
-        { id: "eee-c30", semester: "Summer 2", code: "EEES281", name: "Industrial Training-1", credits: 1 },
-        { id: "eee-c31", semester: "Semester 5", code: "CMPS103", name: "Data Structures & Algorithms", credits: 3 }, { id: "eee-c32", semester: "Semester 5", code: "MEPS219", name: "Mechanical Power Engineering", credits: 3 }, { id: "eee-c33", semester: "Semester 5", code: "EEES280", name: "Engineering Seminar", credits: 1 }, { id: "eee-c34", semester: "Semester 5", code: "EPES307", name: "Electrical Measurements", credits: 3 }, { id: "eee-c35", semester: "Semester 5", code: "EPES302", name: "Elements of Power Systems", credits: 3 }, { id: "eee-c36", semester: "Semester 5", code: "EECS202", name: "Operational Amplifiers", credits: 3 }, { id: "eee-c37", semester: "Semester 5", code: "EPES301", name: "Electrical Machines-1", credits: 3 },                    { id: "eee-c38", semester: "Semester 6", code: "EPES311", name: "Microprocessors", credits: 4 }, { id: "eee-c39", semester: "Semester 6", code: "EECS306", name: "Communications-1: Analogue", credits: 3 }, { id: "eee-c40", semester: "Semester 6", code: "MTHS114", name: "Numerical Analysis", credits: 3 }, { id: "eee-c41", semester: "Semester 6", code: "EPES306", name: "Power Electronics (1)", credits: 3 }, { id: "eee-c42", semester: "Semester 6", code: "EPES304", name: "Automatic Control Systems", credits: 3 }, { id: "eee-c43", semester: "Semester 6", code: "EPES308", name: "Electrical Machines-2", credits: 3 },
-        { id: "eee-c44", semester: "Summer 3", code: "EEES381", name: "Industrial Training-2", credits: 2 },
-        { id: "eee-c45", semester: "Semester 7", code: "EPES402", name: "Power System Analysis", credits: 3 }, { id: "eee-c46", semester: "Semester 7", code: "EPES404", name: "Digital Control Systems", credits: 3 }, { id: "eee-c47", semester: "Semester 7", code: "EPES40X", name: "Elective (3)", credits: 3 }, { id: "eee-c48", semester: "Semester 7", code: "EPES40X", name: "Elective (4)", credits: 3 }, { id: "eee-c49", semester: "Semester 7", code: "EPES40X", name: "Elective (5)", credits: 3 }, { id: "eee-c50", semester: "Semester 7", code: "EPES4XX", name: "Elective (6)", credits: 3 }, { id: "eee-c51", semester: "Semester 7", code: "EEES481", name: "Graduation Project (1)", credits: 1 },                    { id: "eee-c52", semester: "Semester 8", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "eee-c53", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (2)", credits: 3 }, { id: "eee-c54", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (3)", credits: 3 }, { id: "eee-c55", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (4)", credits: 3 }, { id: "eee-c56", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (5)", credits: 3 }, { id: "eee-c57", semester: "Semester 8", code: "EEES482", name: "Graduation Project (2)", credits: 3 }, { id: "eee-c58", semester: "Semester 8", code: "GENS3XX", name: "Elective Course UR", credits: 2 }
-      ],
-      // === STEP 1: ADDED NEW CEM MAJOR DATA ===
       "Construction Engineering & Management (CEM)": [
         // Semester 1 (Fall) - 19 Credits
         { id: "cem-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 },
@@ -694,7 +525,51 @@
         { id: "cem-c60", semester: "Semester 8", code: "E-6", name: "Elective E-6", credits: 3, isPlaceholder: true },
         { id: "cem-c61", semester: "Semester 8", code: "CEMS280", name: "Engineering Seminar", credits: 1 },
         { id: "cem-c62", semester: "Semester 8", code: "CEMS482", name: "Graduation Project - 2", credits: 3 }
-      ]
+      ],
+      "Electrical Energy (EEE)": [
+        { id: "eee-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "eee-c2", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "eee-c3", semester: "Semester 1", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "eee-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "eee-c5", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "eee-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "eee-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "eee-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
+        { id: "eee-c9", semester: "Semester 2", code: "PHYS102", name: "Modern Physics", credits: 3 }, { id: "eee-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "eee-c11", semester: "Semester 2", code: "CMPS118", name: "Introduction to Logic Design", credits: 3 }, { id: "eee-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics - Statics", credits: 2 }, { id: "eee-c13", semester: "Semester 2", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "eee-c14", semester: "Semester 2", code: "INTS125", name: "Intro to Mechanical Eng.", credits: 3 }, { id: "eee-c15", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 },
+        { id: "eee-c16", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "eee-c17", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "eee-c18", semester: "Semester 3", code: "CVES125", name: "Civil Engineering", credits: 2 }, { id: "eee-c19", semester: "Semester 3", code: "CMPS102", name: "Programming Techniques", credits: 3 }, { id: "eee-c20", semester: "Semester 3", code: "EPES204", name: "Energy Conversion", credits: 3 }, { id: "eee-c21", semester: "Semester 3", code: "EECS102", name: "Cicruits-1", credits: 3 }, { id: "eee-c22", semester: "Semester 3", code: "GENSOXX", name: "Elective Course UR", credits: 2 },
+        { id: "eee-c23", semester: "Semester 4", code: "EECS102", name: "Cicruits-2", credits: 3 }, { id: "eee-c24", semester: "Semester 4", code: "EECS112", name: "Electronics-1: Basic Circuits", credits: 3 }, { id: "eee-c25", semester: "Semester 4", code: "EECS101", name: "Basic Laboratory", credits: 2 }, { id: "eee-c26", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability and Stats", credits: 3 }, { id: "eee-c27", semester: "Semester 4", code: "EECS203", name: "Signal Analysis", credits: 3 }, { id: "eee-c28", semester: "Semester 4", code: "EPES203", name: "Electromagnetic Fields", credits: 3 }, { id: "eee-c29", semester: "Semester 4", code: "GENS120", name: "Fundamentals of Econ & Acc", credits: 2 },
+        { id: "eee-c30", semester: "Summer 2", code: "EEES281", name: "Industrial Training-1", credits: 1 },
+        { id: "eee-c31", semester: "Semester 5", code: "CMPS103", name: "Data Structures & Algorithms", credits: 3 }, { id: "eee-c32", semester: "Semester 5", code: "MEPS219", name: "Mechanical Power Engineering", credits: 3 }, { id: "eee-c33", semester: "Semester 5", code: "EEES280", name: "Engineering Seminar", credits: 1 }, { id: "eee-c34", semester: "Semester 5", code: "EPES307", name: "Electrical Measurements", credits: 3 }, { id: "eee-c35", semester: "Semester 5", code: "EPES302", name: "Elements of Power Systems", credits: 3 }, { id: "eee-c36", semester: "Semester 5", code: "EECS202", name: "Operational Amplifiers", credits: 3 }, { id: "eee-c37", semester: "Semester 5", code: "EPES301", name: "Electrical Machines-1", credits: 3 },                    { id: "eee-c38", semester: "Semester 6", code: "EPES311", name: "Microprocessors", credits: 4 }, { id: "eee-c39", semester: "Semester 6", code: "EECS306", name: "Communications-1: Analogue", credits: 3 }, { id: "eee-c40", semester: "Semester 6", code: "MTHS114", name: "Numerical Analysis", credits: 3 }, { id: "eee-c41", semester: "Semester 6", code: "EPES306", name: "Power Electronics (1)", credits: 3 }, { id: "eee-c42", semester: "Semester 6", code: "EPES304", name: "Automatic Control Systems", credits: 3 }, { id: "eee-c43", semester: "Semester 6", code: "EPES308", name: "Electrical Machines-2", credits: 3 },
+        { id: "eee-c44", semester: "Summer 3", code: "EEES381", name: "Industrial Training-2", credits: 2 },
+        { id: "eee-c45", semester: "Semester 7", code: "EPES402", name: "Power System Analysis", credits: 3 }, { id: "eee-c46", semester: "Semester 7", code: "EPES404", name: "Digital Control Systems", credits: 3 }, { id: "eee-c47", semester: "Semester 7", code: "EPES40X", name: "Elective (3)", credits: 3 }, { id: "eee-c48", semester: "Semester 7", code: "EPES40X", name: "Elective (4)", credits: 3 }, { id: "eee-c49", semester: "Semester 7", code: "EPES40X", name: "Elective (5)", credits: 3 }, { id: "eee-c50", semester: "Semester 7", code: "EPES4XX", name: "Elective (6)", credits: 3 }, { id: "eee-c51", semester: "Semester 7", code: "EEES481", name: "Graduation Project (1)", credits: 1 },                    { id: "eee-c52", semester: "Semester 8", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "eee-c53", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (2)", credits: 3 }, { id: "eee-c54", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (3)", credits: 3 }, { id: "eee-c55", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (4)", credits: 3 }, { id: "eee-c56", semester: "Semester 8", code: "EPES4XX", name: "Elective Course (5)", credits: 3 }, { id: "eee-c57", semester: "Semester 8", code: "EEES482", name: "Graduation Project (2)", credits: 3 }, { id: "eee-c58", semester: "Semester 8", code: "GENS3XX", name: "Elective Course UR", credits: 2 }
+      ],
+      "Mechanical Design (MDE)": [
+        { id: "mde-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry For Engineers", credits: 2 }, { id: "mde-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "mde-c3", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "mde-c4", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics Dynamics", credits: 3 }, { id: "mde-c5", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "mde-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "mde-c7", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "mde-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
+        { id: "mde-c9", semester: "Semester 2", code: "MTHS005", name: "Intro to Probability and Stats", credits: 3 }, { id: "mde-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "mde-c11", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "mde-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "mde-c13", semester: "Semester 2", code: "MCNS101", name: "Thermodynamics", credits: 3 }, { id: "mde-c14", semester: "Semester 2", code: "MDPS001", name: "Fundamentals of Manufacturing", credits: 2 }, { id: "mde-c15", semester: "Semester 2", code: "MDPS132", name: "Materials Science", credits: 3 },
+        { id: "mde-c16", semester: "Semester 3", code: "GENSOOX", name: "E-0 (Elective)", credits: 2 }, { id: "mde-c17", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "mde-c18", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "mde-c19", semester: "Semester 3", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "mde-c20", semester: "Semester 3", code: "MDPS261", name: "Stress Analysis", credits: 3 }, { id: "mde-c21", semester: "Semester 3", code: "MDPS241", name: "Manufacturing Processes I", credits: 3 }, { id: "mde-c22", semester: "Semester 3", code: "MDPS217", name: "Machine Drawing", credits: 3 },
+        { id: "mde-c23", semester: "Semester 4", code: "MCNS202", name: "Fluid Mechanics", credits: 3 }, { id: "mde-c24", semester: "Semester 4", code: "MTHS104", name: "Numerical Analysis", credits: 3 }, { id: "mde-c25", semester: "Semester 4", code: "EPES201", name: "Electrical Eng. Fundamentals", credits: 3 }, { id: "mde-c26", semester: "Semester 4", code: "MDES280", name: "Seminar", credits: 1 }, { id: "mde-c27", semester: "Semester 4", code: "MDPS251", name: "Kinematics of Machine", credits: 3 }, { id: "mde-c28", semester: "Semester 4", code: "MDPS232", name: "Engineering Materials", credits: 3 }, { id: "mde-c29", semester: "Semester 4", code: "MDPS242", name: "Manufacturing Processes II", credits: 3 },
+        { id: "mde-c30", semester: "Summer 2", code: "MDES281", name: "Industrial Training-1", credits: 1 },
+        { id: "mde-c31", semester: "Semester 5", code: "EPES303", name: "Electric Drive Systems", credits: 3 }, { id: "mde-c32", semester: "Semester 5", code: "GENS120", name: "Elective E-A (Econ & Acc)", credits: 2 }, { id: "mde-c33", semester: "Semester 5", code: "MCNS326", name: "Heat Transfer", credits: 3 }, { id: "mde-c34", semester: "Semester 5", code: "MDPS355", name: "Dynamics of Machine", credits: 3 }, { id: "mde-c35", semester: "Semester 5", code: "MDPS352", name: "Machine Design Components", credits: 3 }, { id: "mde-c36", semester: "Semester 5", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "mde-c37", semester: "Semester 5", code: "MDPS360", name: "Fundamentals of Industrial Eng.", credits: 3 },
+        { id: "mde-c38", semester: "Semester 6", code: "MDPS371", name: "Mechanical Vibrations", credits: 3 }, { id: "mde-c39", semester: "Semester 6", code: "MDPS372", name: "Control System Dynamics", credits: 3 }, { id: "mde-c40", semester: "Semester 6", code: "MDPS354", name: "Machine and System Design", credits: 4 }, { id: "mde-c41", semester: "Semester 6", code: "MDPS363", name: "Finite Element", credits: 3 }, { id: "mde-c42", semester: "Semester 6", code: "MDPS370", name: "Mechanics of Solids", credits: 3 }, { id: "mde-c43", semester: "Semester 6", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 1", credits: 3 },
+        { id: "mde-c44", semester: "Summer 3", code: "MDES381", name: "Industrial Training-2", credits: 2 },
+        { id: "mde-c45", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 2", credits: 3 }, { id: "mde-c46", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 3", credits: 3 }, { id: "mde-c47", semester: "Semester 7", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 4", credits: 3 }, { id: "mde-c48", semester: "Semester 7", code: "EPES303", name: "Instrumentation", credits: 3 }, { id: "mde-c49", semester: "Semester 7", code: "MDPS455", name: "Tribology & Bearings", credits: 3 }, { id: "mde-c50", semester: "Semester 7", code: "MDPS461", name: "Applied Manufacturing CAD/CAM", credits: 3 }, { id: "mde-c51", semester: "Semester 7", code: "MDES481", name: "Graduation Project 1", credits: 1 },
+        { id: "mde-c52", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 5", credits: 3 }, { id: "mde-c53", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 6", credits: 3 }, { id: "mde-c54", semester: "Semester 8", code: "MDPSXXX", name: "PROGRAM REQUIREMENT 7", credits: 3 }, { id: "mde-c55", semester: "Semester 8", code: "GENS30X", name: "E-1 (Elective)", credits: 2 }, { id: "mde-c56", semester: "Semester 8", code: "MDPS464", name: "Failure Analysis", credits: 2 }, { id: "mde-c57", semester: "Semester 8", code: "MDPS410", name: "Mechanical Lab", credits: 2 }, { id: "mde-c58", semester: "Semester 8", code: "MDES482", name: "Graduation Project 2", credits: 3 }
+      ],
+      "Mechatronics (MEE)": [
+        { id: "mee-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "mee-c2", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "mee-c3", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "mee-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "mee-c5", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics Dynamics", credits: 3 }, { id: "mee-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "mee-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "mee-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
+        { id: "mee-c9", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "mee-c10", semester: "Semester 2", code: "MDPS133", name: "Materials for Mechatronics", credits: 3 }, { id: "mee-c11", semester: "Semester 2", code: "MCNS101", name: "Thermodynamics", credits: 3 }, { id: "mee-c12", semester: "Semester 2", code: "EMCS002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "mee-c13", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "mee-c14", semester: "Semester 2", code: "MCNS202", name: "Fluid Mechanics", credits: 3 }, { id: "mee-c15", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 },
+        { id: "mee-c16", semester: "Semester 3", code: "GENS120", name: "Elective E-A (Econ & Acc)", credits: 2 }, { id: "mee-c17", semester: "Semester 3", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "mee-c18", semester: "Semester 3", code: "MDPS217", name: "Machine Drawing", credits: 3 }, { id: "mee-c19", semester: "Semester 3", code: "MDPS261", name: "Stress Analysis", credits: 3 }, { id: "mee-c20", semester: "Semester 3", code: "MDPS241", name: "Manufacturing Processes I", credits: 3 }, { id: "mee-c21", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "mee-c22", semester: "Semester 3", code: "MTHS104", name: "Differential Equations", credits: 3 },
+        { id: "mee-c23", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability & Stats", credits: 3 }, { id: "mee-c24", semester: "Semester 4", code: "EPES201", name: "Electrical Eng. Fundamentals", credits: 3 }, { id: "mee-c25", semester: "Semester 4", code: "CMPS118", name: "Intro to Logic Design", credits: 3 }, { id: "mee-c26", semester: "Semester 4", code: "MDPS251", name: "Kinematics of Machine", credits: 3 }, { id: "mee-c27", semester: "Semester 4", code: "MDPS242", name: "Manufacturing Processes II", credits: 3 }, { id: "mee-c28", semester: "Semester 4", code: "MTHS114", name: "Numerical Analysis", credits: 3 }, { id: "mee-c29", semester: "Semester 4", code: "MEES280", name: "Engineering Seminar", credits: 1 },
+        { id: "mee-c30", semester: "Summer 2", code: "MEES281", name: "Industrial Training-1", credits: 1 },
+        { id: "mee-c31", semester: "Semester 5", code: "GENSOXX", name: "E-0 (Elective)", credits: 2 }, { id: "mee-c32", semester: "Semester 5", code: "GENS3XX", name: "E-1 (Elective)", credits: 2 }, { id: "mee-c33", semester: "Semester 5", code: "EPES303", name: "Electric Drive Systems", credits: 3 }, { id: "mee-c34", semester: "Semester 5", code: "MDPS355", name: "Dynamics of Machine", credits: 3 }, { id: "mee-c35", semester: "Semester 5", code: "MCNS326", name: "Heat Transfer", credits: 3 }, { id: "mee-c36", semester: "Semester 5", code: "MDPS352", name: "Machine Design", credits: 3 }, { id: "mee-c37", semester: "Semester 5", code: "CMPS102", name: "Programming Techniques", credits: 3 },
+        { id: "mee-c38", semester: "Semester 6", code: "MDPS251", name: "Robotics Engineering", credits: 3 }, { id: "mee-c39", semester: "Semester 6", code: "EPES302", name: "Industrial Instrumentation", credits: 3 }, { id: "mee-c40", semester: "Semester 6", code: "MDPS372", name: "Control System Dynamics", credits: 3 }, { id: "mee-c41", semester: "Semester 6", code: "MDPS355", name: "Design of Mechatronics Systems", credits: 4 }, { id: "mee-c42", semester: "Semester 6", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 1 (E2)", credits: 3 }, { id: "mee-c43", semester: "Semester 6", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 2 (E2)", credits: 3 },
+        { id: "mee-c44", semester: "Summer 3", code: "MEES381", name: "Industrial Training-2", credits: 2 },
+        { id: "mee-c45", semester: "Semester 7", code: "CMPS118", name: "Microprocessor Systems", credits: 3 }, { id: "mee-c46", semester: "Semester 7", code: "EPES302", name: "Programmable Logic Control", credits: 3 }, { id: "mee-c47", semester: "Semester 7", code: "MDPS372", name: "Automatic Control I", credits: 3 }, { id: "mee-c48", semester: "Semester 7", code: "EPES305", name: "Industrial Communications & Network", credits: 3 }, { id: "mee-c49", semester: "Semester 7", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 3 (E2)", credits: 3 }, { id: "mee-c50", semester: "Semester 7", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 4 (E3)", credits: 3 }, { id: "mee-c51", semester: "Semester 7", code: "XXXSXXX", name: "Graduation Project 1", credits: 1 },                    { id: "mee-c52", semester: "Semester 8", code: "CMPS201", name: "Embedded systems", credits: 2 }, { id: "mee-c53", semester: "Semester 8", code: "MDPS371", name: "Mechanical Vibrations", credits: 3 }, { id: "mee-c54", semester: "Semester 8", code: "MDPS470", name: "Mechatronics Lab", credits: 2 }, { id: "mee-c55", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 5 (E2)", credits: 3 }, { id: "mee-c56", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 6 (E2)", credits: 3 }, { id: "mee-c57", semester: "Semester 8", code: "XXXSXXX", name: "PROGRAM REQUIREMENT 7 (E3)", credits: 3 }, { id: "mee-c58", semester: "Semester 8", code: "MEES482", name: "GRADUATION PROJECT 2", credits: 3 }
+      ],
+      "Petrochemical Process (PPS)": [
+        { id: "pps-c1", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "pps-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "pps-c3", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "pps-c4", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics Dynamics", credits: 3 }, { id: "pps-c5", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "pps-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 }, { id: "pps-c7", semester: "Semester 1", code: "CHES001", name: "Chemistry For Engineers", credits: 2 }, { id: "pps-c8", semester: "Semester 1", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 },
+        { id: "pps-c9", semester: "Semester 2", code: "GENS005", name: "Elective E-A (Writing Skills)", credits: 2 }, { id: "pps-c10", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 }, { id: "pps-c11", semester: "Semester 2", code: "GENS002", name: "Societal Issues", credits: 2 }, { id: "pps-c12", semester: "Semester 2", code: "EMC002", name: "Eng. Mechanics Statics", credits: 2 }, { id: "pps-c13", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "pps-c14", semester: "Semester 2", code: "CHES101", name: "Organic Chemistry-1", credits: 2 }, { id: "pps-c15", semester: "Semester 2", code: "CHES102", name: "Chemical Engineering Fundamentals", credits: 3 }, { id: "pps-c16", semester: "Semester 2", code: "CHES103", name: "Material Science for Petrochemical Eng.", credits: 2 },
+        { id: "pps-c17", semester: "Semester 3", code: "MTHS102", name: "Linear Algebra & Multivariable", credits: 3 }, { id: "pps-c18", semester: "Semester 3", code: "PES201", name: "Intro to Petroleum Industry", credits: 3 }, { id: "pps-c19", semester: "Semester 3", code: "GENS110", name: "Elective E-A (Mgmt, Risk, Env)", credits: 2 }, { id: "pps-c20", semester: "Semester 3", code: "CHES202", name: "Physical Chemistry -1", credits: 2 }, { id: "pps-c21", semester: "Semester 3", code: "PES202", name: "General Geology", credits: 3 }, { id: "pps-c22", semester: "Semester 3", code: "CHES201", name: "Fluid Mechanics", credits: 3 }, { id: "pps-c23", semester: "Semester 3", code: "INTS201", name: "Electrical Engineering", credits: 3 },
+        { id: "pps-c24", semester: "Semester 4", code: "MTHS104", name: "Differential Equations", credits: 3 }, { id: "pps-c25", semester: "Semester 4", code: "CHES205", name: "Computer Applications in Petrochemical", credits: 2 }, { id: "pps-c26", semester: "Semester 4", code: "CHES206", name: "Organic Chemistry-2", credits: 3 }, { id: "pps-c27", semester: "Semester 4", code: "CHES204", name: "Thermodynamics and Combustion", credits: 3 }, { id: "pps-c28", semester: "Semester 4", code: "CHES203", name: "Physical Chemistry-2", credits: 3 }, { id: "pps-c29", semester: "Semester 4", code: "MTHS204", name: "Advanced Probability and Stats", credits: 3 }, { id: "pps-c30", semester: "Semester 4", code: "E-1", name: "University Elective", credits: 2 },
+        { id: "pps-c31", semester: "Summer 2", code: "PPSS281", name: "Industrial Training-1", credits: 1 },
+        { id: "pps-c32", semester: "Semester 5", code: "MDPS301", name: "Stress Analysis and Vessel Design", credits: 3 }, { id: "pps-c33", semester: "Semester 5", code: "PES301", name: "Reservoir Engineering", credits: 2 }, { id: "pps-c34", semester: "Semester 5", code: "CHES302", name: "Intro to Machine Learning", credits: 3 }, { id: "pps-c35", semester: "Semester 5", code: "CHES301", name: "Unit Operations", credits: 3 }, { id: "pps-c36", semester: "Semester 5", code: "PPSS280", name: "Engineering Seminar", credits: 1 }, { id: "pps-c37", semester: "Semester 5", code: "E2", name: "Elective - 1", credits: 3 }, { id: "pps-c38", semester: "Semester 5", code: "E3", name: "Elective - 2", credits: 4 },
+        { id: "pps-c39", semester: "Semester 6", code: "CHES303", name: "Cryogenic Processes", credits: 2 }, { id: "pps-c40", semester: "Semester 6", code: "CHES304", name: "Heat Transfer and Applications", credits: 3 }, { id: "pps-c41", semester: "Semester 6", code: "CHES307", name: "Application of Machine Learning", credits: 3 }, { id: "pps-c42", semester: "Semester 6", code: "CHES305", name: "Chemical Reactor Design", credits: 3 }, { id: "pps-c43", semester: "Semester 6", code: "GENS120", name: "Fundamentals of Econ & Acc", credits: 2 }, { id: "pps-c44", semester: "Semester 6", code: "CHES306", name: "Process Control", credits: 3 }, { id: "pps-c45", semester: "Semester 6", code: "E4", name: "Elective -E3", credits: 3 },
+        { id: "pps-c46", semester: "Summer 3", code: "PPSS381", name: "Industrial Training-2", credits: 2 },
+        { id: "pps-c47", semester: "Semester 7", code: "PES401", name: "Petroleum Production Engineering", credits: 3 }, { id: "pps-c48", semester: "Semester 7", code: "CHES401", name: "Eng. Equipment Design", credits: 3 }, { id: "pps-c49", semester: "Semester 7", code: "CHES402", name: "Petrochemicals from Oil and Gas", credits: 3 }, { id: "pps-c50", semester: "Semester 7", code: "CHES403", name: "Petroleum Refining Engineering", credits: 3 }, { id: "pps-c51", semester: "Semester 7", code: "CHES404", name: "Process and Plant Design", credits: 3 }, { id: "pps-c52", semester: "Semester 7", code: "CHES405", name: "Mass Transfer", credits: 3 }, { id: "pps-c53", semester: "Semester 7", code: "PPSS481", name: "Graduation Project - 1", credits: 1 },
+        { id: "pps-c54", semester: "Semester 8", code: "E4", name: "Elective -4", credits: 3 }, { id: "pps-c55", semester: "Semester 8", code: "E5", name: "Elective -5", credits: 3 }, { id: "pps-c56", semester: "Semester 8", code: "E5", name: "Elective -6", credits: 3 }, { id: "pps-c57", semester: "Semester 8", code: "METS401", name: "Electrochemistry and Corrosion", credits: 3 }, { id: "pps-c58", semester: "Semester 8", code: "CHES406", name: "Economics of Oil and Gas", credits: 2 }, { id: "pps-c59", semester: "Semester 8", code: "CHES407", name: "Separation Processes", credits: 2 }, { id: "pps-c60", semester: "Semester 8", code: "PPSS482", name: "Graduation Project - 2", credits: 3 }                ]
     };
 
     const undoStack = [];
@@ -704,10 +579,9 @@
     let draggedItem = null;
     let isDragging = false;
     let currentY = 0;
-    // FIX: New variable to track the last element that had a drop-target class
     let lastDropTarget = null;
 
-    // === NEW JAVASCRIPT FUNCTION FOR SUGGESTION FORM ===
+    // === SUGGESTION FORM SUBMIT ===
     async function handleSuggestionSubmit(event) {
       event.preventDefault();
       const form = event.target;
@@ -718,8 +592,8 @@
       const data = Object.fromEntries(formData.entries());
 
       if (!data.requestType || !data.suggestionMessage.trim()) {
-        statusMessage.textContent = 'Please fill out all fields before sending.';
-        statusMessage.style.color = '#dc3545'; // Red
+        statusMessage.textContent = 'Please fill out all fields.';
+        statusMessage.style.color = '#dc3545';
         return;
       }
 
@@ -730,32 +604,25 @@
       try {
         const response = await fetch('https://formsubmit.co/ajax/mohamed.nabil.seddik@gmail.com', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(data)
         });
 
         if (response.ok) {
-          statusMessage.textContent = 'Thank you! Your suggestion has been sent successfully.';
-          statusMessage.style.color = '#28a745'; // Green
+          statusMessage.textContent = 'Thank you! Sent successfully.';
+          statusMessage.style.color = '#28a745';
           form.reset();
         } else {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Server responded with an error.');
+          throw new Error('Server error');
         }
       } catch (error) {
-        console.error('Submission error:', error);
-        statusMessage.textContent = 'Sorry, an error occurred. Please try again later.';
-        statusMessage.style.color = '#dc3545'; // Red
+        statusMessage.textContent = 'Error sending suggestion.';
+        statusMessage.style.color = '#dc3545';
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Send Suggestion';
       }
     }
-    // === END OF NEW JAVASCRIPT FUNCTION ===
-
 
     function initApp() {
       populateMajorSelector();
@@ -767,16 +634,14 @@
       document.getElementById('undoButton').addEventListener('click', undoDelete);
       document.getElementById('clearButton').addEventListener('click', clearSavedData);
       addTouchListeners();
-
-      // === ADD EVENT LISTENER FOR THE NEW FORM ===
       document.getElementById('suggestionForm').addEventListener('submit', handleSuggestionSubmit);
 
-      // === STEP 2: ADDED SMOOTH SCROLL FOR BANNER LINK ===
-      document.querySelector('.top-banner a').addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({
-              behavior: 'smooth'
-          });
+      // Smooth scroll for anchors
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
       });
 
       autoScrollLoop();
@@ -793,7 +658,7 @@
 
     function handleMajorChange(event) {
       const newMajor = event.target.value;
-      if (confirm(`You are switching to the ${newMajor} plan. Any unsaved changes to the current plan will be lost. Continue?`)) {
+      if (confirm(`Switching to ${newMajor}. Unsaved changes will be lost. Continue?`)) {
         loadMajorPlan(newMajor);
       } else {
         majorSelector.value = currentMajor;
@@ -836,14 +701,10 @@
     }
 
     function addCollapseListeners() {
-      const headers = document.querySelectorAll('.semester-column h2');
-      headers.forEach(header => {
+      document.querySelectorAll('.semester-column h2').forEach(header => {
         header.addEventListener('click', (e) => {
-          if (e.target.isContentEditable || e.target.closest('button, select, input')) {
-            return;
-          }
-          const parentColumn = header.closest('.semester-column');
-          parentColumn.classList.toggle('collapsed');
+          if (e.target.isContentEditable || e.target.closest('button, select, input')) return;
+          header.closest('.semester-column').classList.toggle('collapsed');
         });
       });
     }
@@ -864,15 +725,12 @@
       if (isPassFail) {
         gradeOptions = ['—', 'Pass', 'Fail'].map(g => `<option value="${g}">${g}</option>`).join('');
       } else {
-        gradeOptions = ['—', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F'].map(g => `<option value="${g}">${g}</option>`).join('');
+        gradeOptions = ['—', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', 'FW', 'W', 'IC'].map(g => `<option value="${g}">${g}</option>`).join('');
       }
 
       const isDefaultPlaceholder = course.isPlaceholder || courseNameLower.includes('elective') || courseNameLower.includes('project') || (course.code && course.code.toUpperCase().includes('XXX'));
       const canBeEdited = course.isPlaceholder || isDefaultPlaceholder;
-
-      if (canBeEdited) {
-        courseEl.dataset.isPlaceholder = "true";
-      }
+      if (canBeEdited) { courseEl.dataset.isPlaceholder = "true"; }
 
       const nameEditableAttribute = canBeEdited ? 'contenteditable="true"' : '';
       const nameEditableClass = canBeEdited ? 'course-name-editable' : '';
@@ -880,39 +738,36 @@
       const codeEditableClass = canBeEdited ? 'course-code-editable' : '';
 
       courseEl.innerHTML = `
-                    <div class="course-main-info">
-                        <div class="course-details">
-                            <div class="${nameEditableClass}" ${nameEditableAttribute}>${course.name}</div>
-                            <div class="course-code">
-                                <span class="${codeEditableClass}" ${codeEditableAttribute}>${course.code || ''}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-controls">
-                        <span class="course-credits">${course.credits} CH</span>
-                        <select class="grade-selector">${gradeOptions}</select>
-                    </div>`;
+        <div class="course-main-info">
+            <div class="course-details">
+                <div class="${nameEditableClass}" ${nameEditableAttribute}>${course.name}</div>
+                <div class="course-code"><span class="${codeEditableClass}" ${codeEditableAttribute}>${course.code || ''}</span></div>
+            </div>
+        </div>
+        <div class="course-controls">
+            <span class="course-credits">${course.credits} CH</span>
+            <select class="grade-selector">${gradeOptions}</select>
+        </div>`;
 
       if (canBeEdited) {
-        const courseNameDiv = courseEl.querySelector('.course-name-editable');
-        const courseCodeSpan = courseEl.querySelector('.course-code-editable');
-        courseNameDiv.addEventListener('blur', () => { courseEl.dataset.name = courseNameDiv.textContent.trim(); });
-        courseCodeSpan.addEventListener('blur', () => { courseEl.dataset.code = courseCodeSpan.textContent.trim(); });
+        const nameEl = courseEl.querySelector('.course-name-editable');
+        const codeEl = courseEl.querySelector('.course-code-editable');
+        nameEl.addEventListener('blur', () => { courseEl.dataset.name = nameEl.textContent.trim(); });
+        codeEl.addEventListener('blur', () => { courseEl.dataset.code = codeEl.textContent.trim(); });
       }
 
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'delete-course-btn';
       deleteBtn.innerHTML = '&times;';
       deleteBtn.onclick = () => {
-        if (confirm(`Are you sure you want to delete "${courseEl.dataset.name}"?`)) {
+        if (confirm(`Delete "${courseEl.dataset.name}"?`)) {
           const nextSibling = courseEl.nextElementSibling;
-          const undoState = {
+          undoStack.push({
             courseData: { id: courseEl.id, name: courseEl.dataset.name, code: courseEl.dataset.code, credits: parseInt(courseEl.dataset.credits), isPlaceholder: !!courseEl.dataset.isPlaceholder, },
             grade: courseEl.querySelector('.grade-selector').value,
             parentSemesterId: courseEl.closest('.semester-column').dataset.semesterId,
             nextSibling: nextSibling
-          };
-          undoStack.push(undoState);
+          });
           courseEl.remove();
           updateAllCalculations();
           document.getElementById('undoButton').disabled = false;
@@ -929,24 +784,18 @@
         if(draggedItem) { draggedItem.classList.remove('dragging'); }
         draggedItem = null;
         isDragging = false;
-        // FIX: Final cleanup for borders when drag ends for any reason
         clearDropTargets();
       });
 
-      courseEl.querySelector('.grade-selector').addEventListener('change', () => { updateAllCalculations(); });
+      courseEl.querySelector('.grade-selector').addEventListener('change', updateAllCalculations);
       return courseEl;
     }
 
     function autoScrollLoop() {
       requestAnimationFrame(autoScrollLoop);
       if (!isDragging) return;
-      const scrollThreshold = 75;
-      const scrollSpeed = 15;
-      if (currentY < scrollThreshold) {
-        window.scrollBy(0, -scrollSpeed);
-      } else if (currentY > window.innerHeight - scrollThreshold) {
-        window.scrollBy(0, scrollSpeed);
-      }
+      if (currentY < 75) window.scrollBy(0, -15);
+      else if (currentY > window.innerHeight - 75) window.scrollBy(0, 15);
     }
 
     function getDragAfterElement(container, y) {
@@ -954,15 +803,11 @@
       return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
+        if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+        else return closest;
       }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 
-    // FIX: New helper function to clear all indicator styles
     function clearDropTargets() {
       if (lastDropTarget) {
         lastDropTarget.classList.remove('drop-target-top', 'drop-target-bottom', 'drop-target-empty');
@@ -970,46 +815,31 @@
       }
     }
 
-    // FIX: The entire drag and drop logic is replaced with the more stable border-based method
     function addDragAndDropListeners() {
       document.querySelectorAll('.course-list').forEach(list => {
         list.addEventListener('dragover', e => {
           e.preventDefault();
-          currentY = e.clientY; // Keep updating for auto-scroll
-
-          clearDropTargets(); // Clear previous target
-
+          currentY = e.clientY;
+          clearDropTargets();
           const afterElement = getDragAfterElement(list, e.clientY);
 
-          // Handle case for empty list
           if (list.childElementCount === 0 || (list.childElementCount === 1 && list.contains(draggedItem))) {
             list.classList.add('drop-target-empty');
             lastDropTarget = list;
           } else if (afterElement == null) {
-            // Handle case for dropping at the bottom
             const lastElement = list.querySelector('.course-item:not(.dragging):last-of-type');
-            if (lastElement) {
-              lastElement.classList.add('drop-target-bottom');
-              lastDropTarget = lastElement;
-            }
+            if (lastElement) { lastElement.classList.add('drop-target-bottom'); lastDropTarget = lastElement; }
           } else {
-            // Handle case for dropping in the middle or top
-            afterElement.classList.add('drop-target-top');
-            lastDropTarget = afterElement;
+            afterElement.classList.add('drop-target-top'); lastDropTarget = afterElement;
           }
         });
-
         list.addEventListener('dragleave', clearDropTargets);
-
         list.addEventListener('drop', e => {
           e.preventDefault();
           if (draggedItem) {
             const afterElement = getDragAfterElement(list, e.clientY);
-            if (afterElement == null) {
-              list.appendChild(draggedItem);
-            } else {
-              list.insertBefore(draggedItem, afterElement);
-            }
+            if (afterElement == null) list.appendChild(draggedItem);
+            else list.insertBefore(draggedItem, afterElement);
             updateAllCalculations();
           }
           clearDropTargets();
@@ -1047,56 +877,40 @@
       document.body.addEventListener('touchmove', e => {
         if (!touchDraggedItem) return;
         e.preventDefault();
-
         const touch = e.touches[0];
         currentY = touch.clientY;
         ghostItem.style.left = `${touch.clientX - startX}px`;
         ghostItem.style.top = `${touch.clientY - startY}px`;
-
         ghostItem.style.display = 'none';
         const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
         ghostItem.style.display = '';
-
         const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
-
-        clearDropTargets(); // Always clear old targets
-
+        clearDropTargets();
         if (dropTargetList) {
           const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
           if (dropTargetList.childElementCount === 0 || (dropTargetList.childElementCount === 1 && dropTargetList.contains(touchDraggedItem))) {
-            dropTargetList.classList.add('drop-target-empty');
-            lastDropTarget = dropTargetList;
+            dropTargetList.classList.add('drop-target-empty'); lastDropTarget = dropTargetList;
           } else if (afterElement == null) {
             const lastElement = dropTargetList.querySelector('.course-item:not(.dragging):last-of-type');
-            if (lastElement) {
-              lastElement.classList.add('drop-target-bottom');
-              lastDropTarget = lastElement;
-            }
+            if (lastElement) { lastElement.classList.add('drop-target-bottom'); lastDropTarget = lastElement; }
           } else {
-            afterElement.classList.add('drop-target-top');
-            lastDropTarget = afterElement;
+            afterElement.classList.add('drop-target-top'); lastDropTarget = afterElement;
           }
         }
       }, { passive: false });
 
       document.body.addEventListener('touchend', e => {
         if (!touchDraggedItem) return;
-
         isDragging = false;
         const touch = e.changedTouches[0];
         const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
         const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
-
         if(dropTargetList) {
           const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
-          if (afterElement == null) {
-            dropTargetList.appendChild(touchDraggedItem);
-          } else {
-            dropTargetList.insertBefore(touchDraggedItem, afterElement);
-          }
+          if (afterElement == null) dropTargetList.appendChild(touchDraggedItem);
+          else dropTargetList.insertBefore(touchDraggedItem, afterElement);
           updateAllCalculations();
         }
-
         document.body.removeChild(ghostItem);
         touchDraggedItem.classList.remove('dragging');
         touchDraggedItem = null;
@@ -1122,7 +936,8 @@
 
           semesterTotalCredits += credits;
 
-          if (grade !== '—') {
+          // Exclude blank, withdraw, and incomplete from calcs
+          if (grade !== '—' && grade !== 'W' && grade !== 'IC') {
             semesterTakenCredits += credits;
             courseEl.classList.add('course-graded');
 
@@ -1146,13 +961,13 @@
 
       const cumulativeGpa = cumulativeGpaCredits > 0 ? (cumulativeQualityPoints / cumulativeGpaCredits).toFixed(2) : '0.00';
       document.getElementById('cumulativeGpa').textContent = `GPA: ${cumulativeGpa}`;
-      document.getElementById('totalCreditsTaken').textContent = `Credits Taken: ${cumulativeTakenCredits}`;
+      document.getElementById('totalCreditsTaken').textContent = `Credits: ${cumulativeTakenCredits}`;
     }
 
     function addCustomCourse() {
       const nameInput = document.getElementById('newCourseName');
       const name = nameInput.value.trim();
-      if (!name) { alert('Please enter a name for the custom course.'); return; }
+      if (!name) { alert('Please enter a name.'); return; }
       const courseData = {
         id: `custom-${Date.now()}`, name: name, code: document.getElementById('newCourseCode').value.trim(),
         credits: parseInt(document.getElementById('newCourseCredits').value),
@@ -1165,10 +980,7 @@
       document.getElementById('newCourseCode').value = '';
     }
 
-    function getStorageKey() {
-      const safeKey = currentMajor.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-      return `plannerState-${safeKey}`;
-    }
+    function getStorageKey() { return `plannerState-${currentMajor.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`; }
 
     function savePlan() {
       const planState = [];
@@ -1182,7 +994,7 @@
       localStorage.setItem(getStorageKey(), JSON.stringify(planState));
       const saveBtn = document.getElementById('saveButton');
       saveBtn.textContent = 'Saved!';
-      setTimeout(() => { saveBtn.textContent = 'Save Plan'; }, 1500);
+      setTimeout(() => { saveBtn.textContent = 'Save'; }, 1500);
     }
 
     function loadPlan() {
@@ -1200,9 +1012,7 @@
         const targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
         if (targetColumn) {
           targetColumn.querySelector('.course-list').appendChild(courseEl);
-          if (isSavedData) {
-            courseEl.querySelector('.grade-selector').value = courseData.grade;
-          }
+          if (isSavedData) { courseEl.querySelector('.grade-selector').value = courseData.grade; }
         } else {
           plannerContainer.querySelector('.course-list').appendChild(courseEl);
         }
@@ -1212,32 +1022,23 @@
 
     function undoDelete() {
       if (undoStack.length === 0) return;
-
       const lastDeleted = undoStack.pop();
       const courseEl = createCourseElement(lastDeleted.courseData);
       const targetSemesterList = document.querySelector(`.semester-column[data-semester-id="${lastDeleted.parentSemesterId}"] .course-list`);
-
       if (targetSemesterList) {
         if (lastDeleted.nextSibling && lastDeleted.nextSibling.parentNode === targetSemesterList) {
           targetSemesterList.insertBefore(courseEl, lastDeleted.nextSibling);
-        } else {
-          targetSemesterList.appendChild(courseEl);
-        }
+        } else { targetSemesterList.appendChild(courseEl); }
         courseEl.querySelector('.grade-selector').value = lastDeleted.grade;
       }
-
       updateAllCalculations();
-
-      if (undoStack.length === 0) {
-        document.getElementById('undoButton').disabled = true;
-      }
+      if (undoStack.length === 0) document.getElementById('undoButton').disabled = true;
     }
 
     function clearSavedData() {
-      const storageKey = getStorageKey();
-      if (confirm(`Are you sure you want to permanently delete your saved plan for ${currentMajor}? This cannot be undone.`)) {
-        localStorage.removeItem(storageKey);
-        alert('Saved plan has been cleared. The page will now reload with the default layout for this major.');
+      if (confirm(`Permanently delete saved plan for ${currentMajor}?`)) {
+        localStorage.removeItem(getStorageKey());
+        alert('Data cleared.');
         loadMajorPlan(currentMajor);
       }
     }
@@ -1245,6 +1046,5 @@
     initApp();
   });
 </script>
-
 </body>
 </html>
