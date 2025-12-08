@@ -97,6 +97,7 @@
     .control-button:hover { background-color: #0056b3; }
     .control-button.clear-btn { background-color: #dc3545; }
     .control-button.undo-btn { background-color: #ffc107; color: #333; }
+    .control-button.add-sem-btn { background-color: #6610f2; }
     .control-button:disabled { background-color: #6c757d; cursor: not-allowed; opacity: 0.65; color: white; }
 
     /* === ADD COURSE FORM === */
@@ -105,7 +106,14 @@
     .add-course-form label { display: flex; flex-direction: column; gap: 5px; font-size: 0.85em; color: #555; text-align: left;}
 
     /* === PLANNER GRID === */
-    .planner-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .planner-container { 
+        display: flex; 
+        flex-wrap: wrap; 
+        gap: 20px; 
+        justify-content: center;
+        /* FIX FOR COLLAPSE ISSUE: Prevents items from stretching to row height */
+        align-items: flex-start; 
+    }
     
     .semester-column {
       background-color: #ffffff;
@@ -117,9 +125,12 @@
       display: flex;
       flex-direction: column;
       border-top: 5px solid #4a6fa5;
-      transition: min-height 0.4s ease-in-out;
+      transition: all 0.3s ease-in-out; /* Changed from min-height to all for smoother animation */
     }
-    .semester-column.collapsed { min-height: 0; }
+    .semester-column.collapsed { 
+        min-height: 0; 
+        padding-bottom: 5px; /* Reduce padding when collapsed */
+    }
     .semester-column.summer-term { border-top-color: #16a085; }
     
     .semester-column h2 {
@@ -134,6 +145,7 @@
       cursor: pointer;
       position: relative;
       padding-right: 25px;
+      user-select: none;
     }
     .semester-column h2::after {
       content: '−';
@@ -155,8 +167,9 @@
       max-height: 1500px;
       overflow: hidden;
       margin-top: 10px;
+      transition: all 0.3s ease-in-out;
     }
-    .semester-column.collapsed .course-list { max-height: 0; min-height: 0; margin-top: 0; }
+    .semester-column.collapsed .course-list { max-height: 0; min-height: 0; margin-top: 0; opacity: 0; }
 
     .course-item {
       background-color: #f9f9f9;
@@ -271,6 +284,7 @@
   <div class="controls-container">
     <div id="cumulativeGpa" class="gpa-counter">GPA: 0.00</div>
     <div id="totalCreditsTaken" class="total-credits-counter">Credits: 0</div>
+    <button id="addSemesterButton" class="control-button add-sem-btn">+ Add Semester</button>
     <button id="saveButton" class="control-button">Save</button>
     <button id="loadButton" class="control-button">Load</button>
     <button id="undoButton" class="control-button undo-btn" disabled>Undo</button>
@@ -385,7 +399,7 @@
       "Semester 9", "Semester 10"
     ];
 
-    // ... (DATA OBJECT SAME AS BEFORE) ...
+    // ... (DATA OBJECT) ...
     const majorCourseData = {
       "Aeronautical & Aviation (AEM)": [
         { id: "aem-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "aem-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus I", credits: 3 }, { id: "aem-c3", semester: "Semester 1", code: "PHYS001", name: "Mech. Prop. of Matter", credits: 3 }, { id: "aem-c4", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "aem-c5", semester: "Semester 1", code: "INTS004", name: "Information Technology", credits: 2 }, { id: "aem-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency & Capacity", credits: 1 }, { id: "aem-c7", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "aem-c8", semester: "Semester 1", code: "GENS001", name: "Critical & Creative Thinking", credits: 2 },
@@ -629,6 +643,7 @@
       majorSelector.addEventListener('change', handleMajorChange);
       loadMajorPlan(currentMajor);
       document.getElementById('addCourseButton').addEventListener('click', addCustomCourse);
+      document.getElementById('addSemesterButton').addEventListener('click', addExtraSemester);
       document.getElementById('saveButton').addEventListener('click', savePlan);
       document.getElementById('loadButton').addEventListener('click', loadPlan);
       document.getElementById('undoButton').addEventListener('click', undoDelete);
@@ -672,41 +687,78 @@
       loadPlan();
     }
 
+    function createSemesterDOM(title, isSummer = false) {
+      let displayTitle = title;
+      if (title.includes("Summer 1")) displayTitle = "Summer (Yr 1-2)";
+      else if (title.includes("Summer 2")) displayTitle = "Summer (Yr 2-3)";
+      else if (title.includes("Summer 3")) displayTitle = "Summer (Yr 3-4)";
+      else if (title.includes("Summer 4")) displayTitle = "Summer (Yr 4-5)";
+
+      const column = document.createElement('div');
+      column.dataset.semesterId = title;
+      column.className = 'semester-column';
+      if (isSummer || title.toLowerCase().includes('summer')) column.classList.add('summer-term');
+      
+      column.innerHTML = `<h2><span class="semester-title-text">${displayTitle}</span><div class="semester-stats"><span class="semester-gpa">GPA: 0.00</span><span class="credit-counter">0 CH</span></div></h2><div class="course-list"></div>`;
+      
+      // Collapse logic
+      column.querySelector('h2').addEventListener('click', (e) => {
+        if (e.target.isContentEditable || e.target.closest('button, select, input')) return;
+        column.classList.toggle('collapsed');
+      });
+
+      return column;
+    }
+
+    function updateSemesterSelect(title) {
+        const semesterSelect = document.getElementById('newCourseSemester');
+        // Check if option exists
+        let exists = false;
+        for(let i=0; i<semesterSelect.options.length; i++){
+            if(semesterSelect.options[i].value === title) exists = true;
+        }
+        
+        if(!exists) {
+            let displayTitle = title;
+            if (title.includes("Summer 1")) displayTitle = "Summer (Yr 1-2)";
+            else if (title.includes("Summer 2")) displayTitle = "Summer (Yr 2-3)";
+            else if (title.includes("Summer 3")) displayTitle = "Summer (Yr 3-4)";
+            else if (title.includes("Summer 4")) displayTitle = "Summer (Yr 4-5)";
+            
+            const option = document.createElement('option');
+            option.value = title;
+            option.textContent = displayTitle;
+            semesterSelect.appendChild(option);
+        }
+    }
+
     function initializePlanner() {
       plannerContainer.innerHTML = '';
       const semesterSelect = document.getElementById('newCourseSemester');
       semesterSelect.innerHTML = '';
 
       semesterTitles.forEach(title => {
-        const column = document.createElement('div');
-        let displayTitle = title;
-        if (title.includes("Summer 1")) displayTitle = "Summer (Yr 1-2)";
-        if (title.includes("Summer 2")) displayTitle = "Summer (Yr 2-3)";
-        if (title.includes("Summer 3")) displayTitle = "Summer (Yr 3-4)";
-        if (title.includes("Summer 4")) displayTitle = "Summer (Yr 4-5)";
-
-        column.dataset.semesterId = title;
-        column.className = 'semester-column';
-        if (title.toLowerCase().includes('summer')) column.classList.add('summer-term');
-        column.innerHTML = `<h2><span class="semester-title-text">${displayTitle}</span><div class="semester-stats"><span class="semester-gpa">GPA: 0.00</span><span class="credit-counter">0 CH</span></div></h2><div class="course-list"></div>`;
+        const column = createSemesterDOM(title);
         plannerContainer.appendChild(column);
-
-        const option = document.createElement('option');
-        option.value = title;
-        option.textContent = displayTitle;
-        semesterSelect.appendChild(option);
+        updateSemesterSelect(title);
       });
       addDragAndDropListeners();
-      addCollapseListeners();
     }
 
-    function addCollapseListeners() {
-      document.querySelectorAll('.semester-column h2').forEach(header => {
-        header.addEventListener('click', (e) => {
-          if (e.target.isContentEditable || e.target.closest('button, select, input')) return;
-          header.closest('.semester-column').classList.toggle('collapsed');
-        });
-      });
+    function addExtraSemester() {
+        const existingColumns = document.querySelectorAll('.semester-column');
+        const count = existingColumns.length + 1;
+        const newTitle = `Extra Semester ${count - semesterTitles.length}`;
+        
+        const column = createSemesterDOM(newTitle);
+        plannerContainer.appendChild(column);
+        updateSemesterSelect(newTitle);
+        
+        // Re-bind listeners for the new list
+        addDragAndDropListeners();
+        
+        // Scroll to new semester
+        column.scrollIntoView({ behavior: 'smooth' });
     }
 
     function createCourseElement(course) {
@@ -817,6 +869,13 @@
 
     function addDragAndDropListeners() {
       document.querySelectorAll('.course-list').forEach(list => {
+        // Remove old listeners to avoid duplicates if re-called
+        const newClone = list.cloneNode(false);
+        // We can't easily replace node to strip listeners without losing children
+        // Instead, we will rely on the fact that existing logic works, but
+        // for dynamically added semesters, we need to ensure they get listeners.
+        // A simple way is to re-query everything.
+        
         list.addEventListener('dragover', e => {
           e.preventDefault();
           currentY = e.clientY;
@@ -974,7 +1033,15 @@
       };
       const courseEl = createCourseElement(courseData);
       const targetSemesterId = document.getElementById('newCourseSemester').value;
-      document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"] .course-list`).appendChild(courseEl);
+      
+      let targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
+      if(!targetColumn) {
+         // Create logic handled elsewhere, but effectively semester select usually only has valid options
+         alert("Semester not found.");
+         return;
+      }
+      
+      targetColumn.querySelector(`.course-list`).appendChild(courseEl);
       updateAllCalculations();
       nameInput.value = '';
       document.getElementById('newCourseCode').value = '';
@@ -1009,11 +1076,23 @@
       coursesToLoad.forEach(courseData => {
         const courseEl = createCourseElement(courseData);
         const targetSemesterId = isSavedData ? courseData.semesterId : courseData.semester;
-        const targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
+        
+        let targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
+        
+        // If loading saved data and the semester doesn't exist (e.g., custom extra semesters), create it
+        if (!targetColumn && isSavedData) {
+            const column = createSemesterDOM(targetSemesterId);
+            plannerContainer.appendChild(column);
+            updateSemesterSelect(targetSemesterId);
+            addDragAndDropListeners(); // Refresh listeners
+            targetColumn = column;
+        }
+
         if (targetColumn) {
           targetColumn.querySelector('.course-list').appendChild(courseEl);
           if (isSavedData) { courseEl.querySelector('.grade-selector').value = courseData.grade; }
         } else {
+          // Fallback if something is really wrong, put in first semester
           plannerContainer.querySelector('.course-list').appendChild(courseEl);
         }
       });
@@ -1024,7 +1103,14 @@
       if (undoStack.length === 0) return;
       const lastDeleted = undoStack.pop();
       const courseEl = createCourseElement(lastDeleted.courseData);
-      const targetSemesterList = document.querySelector(`.semester-column[data-semester-id="${lastDeleted.parentSemesterId}"] .course-list`);
+      
+      let targetSemesterList = null;
+      let targetColumn = document.querySelector(`.semester-column[data-semester-id="${lastDeleted.parentSemesterId}"]`);
+      
+      if(targetColumn) {
+          targetSemesterList = targetColumn.querySelector('.course-list');
+      }
+
       if (targetSemesterList) {
         if (lastDeleted.nextSibling && lastDeleted.nextSibling.parentNode === targetSemesterList) {
           targetSemesterList.insertBefore(courseEl, lastDeleted.nextSibling);
