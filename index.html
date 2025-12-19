@@ -125,7 +125,7 @@
       display: flex;
       flex-direction: column;
       border-top: 5px solid #4a6fa5;
-      transition: all 0.3s ease-in-out; /* Changed from min-height to all for smoother animation */
+      transition: all 0.3s ease-in-out; 
     }
     .semester-column.collapsed { 
         min-height: 0; 
@@ -382,6 +382,17 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // === 1. SECURITY FIX: SANITIZER FUNCTION ===
+    function escapeHtml(text) {
+      if (!text) return "";
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     // === GPA MAP ===
     const gpaMap = {
       'A+': 4.00, 'A': 4.00, 'A-': 3.70, 
@@ -761,14 +772,21 @@
         column.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // === 2. SECURITY FIX: UPDATED CREATECOURSE ELEMENT ===
     function createCourseElement(course) {
       const courseEl = document.createElement('div');
       courseEl.className = 'course-item';
       courseEl.draggable = true;
       courseEl.id = course.id;
       courseEl.dataset.credits = course.credits;
+      
+      // Keep raw data in dataset for logic
       courseEl.dataset.name = course.name;
       courseEl.dataset.code = course.code;
+
+      // === SANITIZATION STEP ===
+      const safeName = escapeHtml(course.name);
+      const safeCode = escapeHtml(course.code || '');
 
       const courseNameLower = course.name.toLowerCase();
       const isPassFail = courseNameLower.includes('training') || courseNameLower.includes('seminar');
@@ -789,11 +807,12 @@
       const codeEditableAttribute = canBeEdited ? 'contenteditable="true"' : '';
       const codeEditableClass = canBeEdited ? 'course-code-editable' : '';
 
+      // === USING SAFE VARIABLES HERE ===
       courseEl.innerHTML = `
         <div class="course-main-info">
             <div class="course-details">
-                <div class="${nameEditableClass}" ${nameEditableAttribute}>${course.name}</div>
-                <div class="course-code"><span class="${codeEditableClass}" ${codeEditableAttribute}>${course.code || ''}</span></div>
+                <div class="${nameEditableClass}" ${nameEditableAttribute}>${safeName}</div>
+                <div class="course-code"><span class="${codeEditableClass}" ${codeEditableAttribute}>${safeCode}</span></div>
             </div>
         </div>
         <div class="course-controls">
@@ -804,8 +823,9 @@
       if (canBeEdited) {
         const nameEl = courseEl.querySelector('.course-name-editable');
         const codeEl = courseEl.querySelector('.course-code-editable');
-        nameEl.addEventListener('blur', () => { courseEl.dataset.name = nameEl.textContent.trim(); });
-        codeEl.addEventListener('blur', () => { courseEl.dataset.code = codeEl.textContent.trim(); });
+        // === USING innerText FOR SAFETY WHEN SAVING EDITS ===
+        nameEl.addEventListener('blur', () => { courseEl.dataset.name = nameEl.innerText.trim(); });
+        codeEl.addEventListener('blur', () => { courseEl.dataset.code = codeEl.innerText.trim(); });
       }
 
       const deleteBtn = document.createElement('button');
@@ -1036,7 +1056,6 @@
       
       let targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
       if(!targetColumn) {
-         // Create logic handled elsewhere, but effectively semester select usually only has valid options
          alert("Semester not found.");
          return;
       }
