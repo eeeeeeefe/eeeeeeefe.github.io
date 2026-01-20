@@ -247,10 +247,23 @@
         .semester-column.collapsed .course-list { max-height: 0; min-height: 0; margin-top: 0; opacity: 0; }
 
         .course-item {
-            background-color: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-bottom: 8px;
-            border-radius: 5px; cursor: grab; display: flex; flex-direction: column; gap: 5px; position: relative;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            position: relative;
+            transition: background-color 0.2s;
         }
-        .course-item.course-graded { background-color: #d4edda; }
+
+        .course-item.course-graded {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
         .course-main-info { display: flex; justify-content: space-between; align-items: center; }
         .course-details { font-size: 0.9em; font-weight: 500; text-align: left; }
         .course-code { font-size: 0.8em; color: #666; }
@@ -263,18 +276,111 @@
         .course-credits {
             font-weight: bold; color: #0056b3; background-color: #e9ecef; padding: 3px 8px; border-radius: 4px; font-size: 0.8em;
         }
-        .grade-selector { border: 1px solid #ccc; border-radius: 4px; padding: 2px; font-size: 0.9em; }
+        .grade-selector {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+            /* DESKTOP DEFAULT: Small and Compact (Original) */
+            padding: 2px;
+            font-size: 0.9em;
+            min-width: auto;
+        }
 
         .delete-course-btn {
             position: absolute; top: 5px; right: 5px;
             background: #ff4d4d; color: white; border: none; border-radius: 50%;
-            width: 20px; height: 20px; cursor: pointer; font-size: 14px;
+            width: 20px; height: 20px; cursor: pointer;
+            /* Perfect Centering Logic */
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.2s;
-        }
-        .course-item:hover .delete-course-btn { opacity: 1; }
+            font-size: 16px;
+            line-height: 1; /* Removes font vertical spacing issues */
+            padding-bottom: 2px; /* Micro-adjustment for the 'x' character height */
 
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.2s;
+            z-index: 5;
+        }
+
+        .course-item:hover .delete-course-btn { opacity: 1; }
+        @media (hover: none) { .delete-course-btn { opacity: 1; } }
         .dragging { opacity: 0.5; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+
+            h1 { font-size: 1.5em; }
+
+            /* Fix Major Selector Overflow */
+            .major-selector-container {
+                width: 100%;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            /* Force the dropdown to stay inside the screen */
+            #majorSelector {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                font-size: 0.9em; /* Slightly smaller text to fit better */
+            }
+
+            /* Make containers full width */
+            .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container {
+                width: 100%;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            /* === SEMESTER COLUMN FIXES === */
+            .semester-column {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 12px; /* Thinner padding (was 15px) */
+                margin-bottom: 5px; /* Add space between semesters to help scrolling */
+            }
+
+            /* Make semester title compact */
+            .semester-column h2 {
+                font-size: 1em;
+                padding-bottom: 5px;
+                margin-bottom: 5px;
+            }
+
+            /* Controls stack better */
+            .controls-container {
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 5px;
+            }
+
+            .control-button {
+                flex-grow: 1;
+                text-align: center;
+                padding: 10px 5px; /* Smaller padding */
+                font-size: 0.85em;
+            }
+
+            /* Form elements full width */
+            .add-course-form { flex-direction: column; align-items: stretch; }
+            .add-course-form label { width: 100%; }
+            .add-course-form button { width: 100%; margin-top: 10px;}
+
+            /* Table scroll on small screens */
+            .grading-container { overflow-x: auto; }
+            .grading-table { min-width: 300px; }
+
+            /* Grade Selector - Big for touch (from previous step) */
+            .grade-selector {
+                padding: 8px 12px;
+                font-size: 1em;
+                min-width: 60px;
+            }
+
+            /* Always show delete button on mobile */
+            .delete-course-btn { opacity: 1; }
+        }
 
         /* Drop Indicators */
         .drop-target-top { border-top: 4px solid #007bff !important; }
@@ -832,7 +938,7 @@
     function createCourseElement(course) {
         const courseEl = document.createElement('div');
         courseEl.className = 'course-item';
-        courseEl.draggable = true;
+        courseEl.draggable = true; // Default to draggable
         courseEl.id = course.id;
         courseEl.dataset.credits = course.credits;
 
@@ -841,15 +947,12 @@
 
         const safeName = escapeHtml(course.name);
         const safeCode = escapeHtml(course.code || '');
+
         const courseNameLower = course.name.toLowerCase();
         const isPassFail = courseNameLower.includes('training') || courseNameLower.includes('seminar');
-
-        let gradeOptions;
-        if (isPassFail) {
-            gradeOptions = ['—', 'Pass', 'Fail'].map(g => `<option value="${g}">${g}</option>`).join('');
-        } else {
-            gradeOptions = ['—', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', 'FW', 'W', 'IC'].map(g => `<option value="${g}">${g}</option>`).join('');
-        }
+        let gradeOptions = isPassFail
+            ? ['—', 'Pass', 'Fail'].map(g => `<option value="${g}">${g}</option>`).join('')
+            : ['—', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', 'FW', 'W', 'IC'].map(g => `<option value="${g}">${g}</option>`).join('');
 
         const isDefaultPlaceholder = course.isPlaceholder || courseNameLower.includes('elective') || courseNameLower.includes('project') || (course.code && course.code.toUpperCase().includes('XXX'));
         const canBeEdited = course.isPlaceholder || isDefaultPlaceholder;
@@ -860,6 +963,7 @@
         const codeEditableAttribute = canBeEdited ? 'contenteditable="true"' : '';
         const codeEditableClass = canBeEdited ? 'course-code-editable' : '';
 
+        // === EXACT ORIGINAL HTML STRUCTURE ===
         courseEl.innerHTML = `
       <div class="course-main-info">
           <div class="course-details">
@@ -898,6 +1002,15 @@
         };
         courseEl.appendChild(deleteBtn);
 
+        // === MAGIC FIX FOR DESKTOP ===
+        // If hovering over the selector, DISABLE dragging so you can click freely
+        const selector = courseEl.querySelector('.grade-selector');
+        selector.addEventListener('mouseenter', () => { courseEl.setAttribute('draggable', 'false'); });
+        selector.addEventListener('mouseleave', () => { courseEl.setAttribute('draggable', 'true'); });
+        // Also for delete button
+        deleteBtn.addEventListener('mouseenter', () => { courseEl.setAttribute('draggable', 'false'); });
+        deleteBtn.addEventListener('mouseleave', () => { courseEl.setAttribute('draggable', 'true'); });
+
         courseEl.addEventListener('dragstart', () => {
             draggedItem = courseEl;
             isDragging = true;
@@ -907,10 +1020,11 @@
             if(draggedItem) { draggedItem.classList.remove('dragging'); }
             draggedItem = null;
             isDragging = false;
+            courseEl.setAttribute('draggable', 'true'); // Ensure it's reset
             clearDropTargets();
         });
 
-        courseEl.querySelector('.grade-selector').addEventListener('change', updateAllCalculations);
+        selector.addEventListener('change', updateAllCalculations);
         return courseEl;
     }
 
@@ -1223,39 +1337,57 @@
         let startX, startY;
 
         plannerContainer.addEventListener('touchstart', e => {
+            if (e.target.tagName === 'SELECT' || e.target.tagName === 'OPTION' || e.target.closest('.delete-course-btn')) {
+                return;
+            }
+
             const target = e.target.closest('.course-item');
-            if (target && !e.target.isContentEditable && !e.target.closest('.delete-course-btn')) {
+            // Don't drag if editing text
+            if (target && !e.target.isContentEditable) {
                 isDragging = true;
                 touchDraggedItem = target;
+
                 const rect = target.getBoundingClientRect();
                 ghostItem = target.cloneNode(true);
                 ghostItem.style.position = 'fixed';
                 ghostItem.style.width = `${rect.width}px`;
                 ghostItem.style.height = `${rect.height}px`;
                 ghostItem.style.pointerEvents = 'none';
-                ghostItem.style.opacity = '0.8';
+                ghostItem.style.opacity = '0.9';
                 ghostItem.style.zIndex = '1000';
+                ghostItem.style.background = '#fff'; // Ensure ghost has background
+
+                // Hide ghost initially. Only show if we actually move.
+                ghostItem.style.display = 'none';
                 document.body.appendChild(ghostItem);
+
                 startX = e.touches[0].clientX - rect.left;
                 startY = e.touches[0].clientY - rect.top;
-                ghostItem.style.left = `${e.touches[0].clientX - startX}px`;
-                ghostItem.style.top = `${e.touches[0].clientY - startY}px`;
-                target.classList.add('dragging');
             }
-        }, { passive: true });
+        }, { passive: false });
 
         document.body.addEventListener('touchmove', e => {
             if (!touchDraggedItem) return;
-            e.preventDefault();
+
             const touch = e.touches[0];
+
+            // Show visual drag cues
+            touchDraggedItem.classList.add('dragging');
+            ghostItem.style.display = 'block';
+            e.preventDefault(); // Stop scrolling
+
             currentY = touch.clientY;
             ghostItem.style.left = `${touch.clientX - startX}px`;
             ghostItem.style.top = `${touch.clientY - startY}px`;
+
+            // Hide ghost momentarily to check what's underneath
             ghostItem.style.display = 'none';
             const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-            ghostItem.style.display = '';
+            ghostItem.style.display = 'block';
+
             const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
             clearDropTargets();
+
             if (dropTargetList) {
                 const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
                 if (dropTargetList.childElementCount === 0 || (dropTargetList.childElementCount === 1 && dropTargetList.contains(touchDraggedItem))) {
@@ -1272,23 +1404,29 @@
         document.body.addEventListener('touchend', e => {
             if (!touchDraggedItem) return;
             isDragging = false;
+
             const touch = e.changedTouches[0];
-            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-            const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
-            if(dropTargetList) {
-                const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
-                if (afterElement == null) dropTargetList.appendChild(touchDraggedItem);
-                else dropTargetList.insertBefore(touchDraggedItem, afterElement);
-                updateAllCalculations();
+            // Similar check: ghostItem must be visible to count as a drag
+            if(ghostItem && ghostItem.style.display !== 'none') {
+                ghostItem.style.display = 'none'; // Hide to check below
+                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
+
+                if(dropTargetList) {
+                    const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
+                    if (afterElement == null) dropTargetList.appendChild(touchDraggedItem);
+                    else dropTargetList.insertBefore(touchDraggedItem, afterElement);
+                    updateAllCalculations();
+                }
             }
-            document.body.removeChild(ghostItem);
+
+            if(ghostItem) document.body.removeChild(ghostItem);
             touchDraggedItem.classList.remove('dragging');
             touchDraggedItem = null;
             ghostItem = null;
             clearDropTargets();
         });
     }
-
     // Bind Events
     populateMajorSelector();
     majorSelector.addEventListener('change', handleMajorChange);
