@@ -60,7 +60,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #37004d 0%, #760c6d 100%); /* Instapay Colors */
+            background: linear-gradient(135deg, #37004d 0%, #760c6d 100%);
             color: white;
             padding: 10px 25px;
             border-radius: 50px;
@@ -74,7 +74,7 @@
         .instapay-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(118, 12, 109, 0.4);
-            color: white; /* Keep text white */
+            color: white;
             text-decoration: none;
         }
 
@@ -88,7 +88,7 @@
         }
 
         .qr-display {
-            display: none; /* Hidden by default */
+            display: none;
             margin-top: 15px;
             animation: fadeIn 0.5s;
         }
@@ -109,7 +109,7 @@
             align-items: center;
         }
         .user-profile {
-            display: none; /* Hidden by default */
+            display: none;
             align-items: center;
             gap: 8px;
             background: white;
@@ -282,7 +282,6 @@
             background-color: white;
             cursor: pointer;
             text-align: center;
-            /* DESKTOP DEFAULT: Small and Compact (Original) */
             padding: 2px;
             font-size: 0.9em;
             min-width: auto;
@@ -292,13 +291,11 @@
             position: absolute; top: 5px; right: 5px;
             background: #ff4d4d; color: white; border: none; border-radius: 50%;
             width: 20px; height: 20px; cursor: pointer;
-            /* Perfect Centering Logic */
             display: flex; align-items: center; justify-content: center;
             font-size: 16px;
-            line-height: 1; /* Removes font vertical spacing issues */
-            padding-bottom: 2px; /* Micro-adjustment for the 'x' character height */
-
-            opacity: 0; /* Hidden by default */
+            line-height: 1;
+            padding-bottom: 2px;
+            opacity: 0;
             transition: opacity 0.2s;
             z-index: 5;
         }
@@ -306,81 +303,6 @@
         .course-item:hover .delete-course-btn { opacity: 1; }
         @media (hover: none) { .delete-course-btn { opacity: 1; } }
         .dragging { opacity: 0.5; }
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-
-            h1 { font-size: 1.5em; }
-
-            /* Fix Major Selector Overflow */
-            .major-selector-container {
-                width: 100%;
-                padding: 15px;
-                box-sizing: border-box;
-            }
-
-            /* Force the dropdown to stay inside the screen */
-            #majorSelector {
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-                font-size: 0.9em; /* Slightly smaller text to fit better */
-            }
-
-            /* Make containers full width */
-            .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container {
-                width: 100%;
-                padding: 15px;
-                box-sizing: border-box;
-            }
-
-            /* === SEMESTER COLUMN FIXES === */
-            .semester-column {
-                width: 100%;
-                box-sizing: border-box;
-                padding: 12px; /* Thinner padding (was 15px) */
-                margin-bottom: 5px; /* Add space between semesters to help scrolling */
-            }
-
-            /* Make semester title compact */
-            .semester-column h2 {
-                font-size: 1em;
-                padding-bottom: 5px;
-                margin-bottom: 5px;
-            }
-
-            /* Controls stack better */
-            .controls-container {
-                flex-direction: row;
-                justify-content: space-around;
-                gap: 5px;
-            }
-
-            .control-button {
-                flex-grow: 1;
-                text-align: center;
-                padding: 10px 5px; /* Smaller padding */
-                font-size: 0.85em;
-            }
-
-            /* Form elements full width */
-            .add-course-form { flex-direction: column; align-items: stretch; }
-            .add-course-form label { width: 100%; }
-            .add-course-form button { width: 100%; margin-top: 10px;}
-
-            /* Table scroll on small screens */
-            .grading-container { overflow-x: auto; }
-            .grading-table { min-width: 300px; }
-
-            /* Grade Selector - Big for touch (from previous step) */
-            .grade-selector {
-                padding: 8px 12px;
-                font-size: 1em;
-                min-width: 60px;
-            }
-
-            /* Always show delete button on mobile */
-            .delete-course-btn { opacity: 1; }
-        }
 
         /* Drop Indicators */
         .drop-target-top { border-top: 4px solid #007bff !important; }
@@ -405,16 +327,20 @@
         @media (max-width: 768px) {
             body { padding: 10px; }
             h1 { font-size: 1.5em; }
-            .major-selector-container, .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container { width: 100%; padding: 15px; box-sizing: border-box; }
-            .semester-column { width: 100%; box-sizing: border-box; }
-            .controls-container { flex-direction: row; justify-content: space-around; }
-            .control-button { flex-grow: 1; text-align: center; padding: 12px 10px; }
+            .major-selector-container { width: 100%; padding: 15px; box-sizing: border-box; }
+            #majorSelector { width: 100%; max-width: 100%; box-sizing: border-box; font-size: 0.9em; }
+            .useful-links-container, .grading-container, .add-course-container, .suggestion-box-container { width: 100%; padding: 15px; box-sizing: border-box; }
+            .semester-column { width: 100%; box-sizing: border-box; padding: 12px; margin-bottom: 5px; }
+            .semester-column h2 { font-size: 1em; padding-bottom: 5px; margin-bottom: 5px; }
+            .controls-container { flex-direction: row; justify-content: space-around; gap: 5px; }
+            .control-button { flex-grow: 1; text-align: center; padding: 10px 5px; font-size: 0.85em; }
             .add-course-form { flex-direction: column; align-items: stretch; }
             .add-course-form label { width: 100%; }
-            .add-course-form button { width: 100%; margin-top: 10px;}
+            .add-course-form button { width: 100%; margin-top: 10px; }
             .grading-container { overflow-x: auto; }
             .grading-table { min-width: 300px; }
-            .delete-course-btn { width: 25px; height: 25px; font-size: 18px; }
+            .grade-selector { padding: 8px 12px; font-size: 1em; min-width: 60px; }
+            .delete-course-btn { width: 25px; height: 25px; font-size: 18px; opacity: 1; }
         }
     </style>
 </head>
@@ -428,7 +354,6 @@
 <div class="header-container">
     <h1>Faculty of Engineering Course Planner</h1>
 
-    <!-- FIREBASE AUTH UI -->
     <div class="auth-bar">
         <button id="googleSignInBtn" class="google-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18" height="18">
@@ -442,7 +367,6 @@
             <button id="signOutBtn" style="background:none; border:none; color:#666; cursor:pointer; font-size:0.8em; text-decoration:underline; margin-left:5px;">Sign Out</button>
         </div>
     </div>
-    <!-- END AUTH UI -->
 
     <div class="controls-container">
         <div id="cumulativeGpa" class="gpa-counter">GPA: 0.00</div>
@@ -528,33 +452,27 @@
 </div>
 
 <footer>
-
-    <!-- Donation Section -->
     <div class="support-container">
         <h4 style="margin-top: 0; color: #333;">☕ Support the Developer</h4>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">
             If this planner helped you survive the semester, help cover our running costs!
         </p>
 
-        <!-- Direct Link Button -->
         <a href="https://ipn.eg/S/mohamednabilfr/instapay/8kFLT8" target="_blank" class="instapay-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
             Donate via Instapay
         </a>
 
-        <!-- QR Code Toggle -->
         <div class="qr-toggle" onclick="document.getElementById('qrCodeBox').style.display = document.getElementById('qrCodeBox').style.display === 'block' ? 'none' : 'block'">
             or show QR Code
         </div>
 
-        <!-- Hidden QR Code Image -->
         <div id="qrCodeBox" class="qr-display">
             <img src="instapay-qr.jpg" alt="Instapay QR Code" class="qr-img">
             <p style="font-size: 0.8em; margin-top: 5px; font-family: monospace;">mohamednabilfr@instapay</p>
         </div>
     </div>
 
-    <!-- Contact Info -->
     <p style="margin-top: 30px; font-size: 0.9em; color: #888;">
         Created by Mohamed Nabil
         <br>
@@ -563,9 +481,7 @@
     </p>
 </footer>
 
-<!-- === MAIN APPLICATION LOGIC (MODULE) === -->
 <script type="module">
-    // Import Firebase Functions from CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -579,7 +495,6 @@
         appId: "1:639806657370:web:f066901b679151d0f75963"
     };
 
-    // Initialize Firebase
     let app, auth, db;
     let currentUser = null;
     let isFirebaseReady = false;
@@ -590,17 +505,12 @@
         db = getFirestore(app);
         isFirebaseReady = true;
     } catch (e) {
-        console.error("Firebase init failed (Did you paste the config?):", e);
+        console.error("Firebase init failed:", e);
     }
 
-    // === GLOBAL VARIABLES ===
     const semesterTitles = ["Semester 1", "Semester 2", "Summer 1", "Semester 3", "Semester 4", "Summer 2", "Semester 5", "Semester 6", "Summer 3", "Semester 7", "Semester 8", "Summer 4", "Semester 9", "Semester 10"];
     const gpaMap = { 'A+': 4.00, 'A': 4.00, 'A-': 3.70, 'B+': 3.30, 'B': 3.00, 'B-': 2.70, 'C+': 2.30, 'C': 2.00, 'C-': 1.70, 'D+': 1.30, 'D': 1.00, 'F': 0.00, 'FW': 0.00 };
 
-    // Data for all majors (Truncated for brevity, but I included the full structure logic)
-    // PASTE THE FULL majorCourseData OBJECT FROM YOUR PREVIOUS FILE HERE
-    // For the sake of this code block, I will assume the object exists.
-    // IMPORTANT: Ensure you keep the full data object in your final file.
     const majorCourseData = {
         "Aeronautical & Aviation (AEM)": [
             { id: "aem-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "aem-c2", semester: "Semester 1", code: "MTHS002", name: "Calculus I", credits: 3 }, { id: "aem-c3", semester: "Semester 1", code: "PHYS001", name: "Mech. Prop. of Matter", credits: 3 }, { id: "aem-c4", semester: "Semester 1", code: "EMCS001", name: "Eng. Mechanics - Dynamics", credits: 3 }, { id: "aem-c5", semester: "Semester 1", code: "INTS004", name: "Information Technology", credits: 2 }, { id: "aem-c6", semester: "Semester 1", code: "GENS004", name: "Proficiency & Capacity", credits: 1 }, { id: "aem-c7", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "aem-c8", semester: "Semester 1", code: "GENS001", name: "Critical & Creative Thinking", credits: 2 },
@@ -614,7 +524,7 @@
             { id: "aem-c48", semester: "Semester 7", code: "AEMS481", name: "Graduation Project-1", credits: 1 }, { id: "aem-c49", semester: "Semester 7", code: "AERSXXX", name: "ELECTIVE (4) E-2", credits: 2 }, { id: "aem-c50", semester: "Semester 7", code: "AERSXXX", name: "ELECTIVE (5) E-2", credits: 2 }, { id: "aem-c51", semester: "Semester 7", code: "AERS414", name: "Intro to Microcontroller", credits: 3 }, { id: "aem-c52", semester: "Semester 7", code: "AERS416", name: "Airtransport System Analysis", credits: 3 }, { id: "aem-c53", semester: "Semester 7", code: "AERS412", name: "Aircraft Structures", credits: 3 }, { id: "aem-c54", semester: "Semester 7", code: "AERSXXX", name: "ELECTIVE (6) E-2", credits: 3 }, { id: "aem-c55", semester: "Semester 7", code: "AERSXXX", name: "ELECTIVE (7) E-2", credits: 2 },
             { id: "aem-c56", semester: "Semester 8", code: "AEMS482", name: "Graduation Project-2", credits: 3 }, { id: "aem-c57", semester: "Semester 8", code: "AERS420", name: "Aviation Laws & Airworthiness", credits: 2 }, { id: "aem-c58", semester: "Semester 8", code: "AERSXXX", name: "ELECTIVE (8) E-2", credits: 3 }, { id: "aem-c59", semester: "Semester 8", code: "AERSXXX", name: "ELECTIVE (9) E-2", credits: 3 }, { id: "aem-c60", semester: "Semester 8", code: "AERSXXX", name: "ELECTIVE (10) E-2", credits: 3 }, { id: "aem-c61", semester: "Semester 8", code: "AERS424", name: "Flight Mech, Stability & Ctrl", credits: 3 }, { id: "aem-c62", semester: "Semester 8", code: "AERS428", name: "Aviation Organization", credits: 2 }
         ],
-        "Architectural Engineering (AET)": [
+                "Architectural Engineering (AET)": [
             { id: "aet-c1", semester: "Semester 1", code: "CHES001", name: "Chemistry for Engineers", credits: 2 }, { id: "aet-c2", semester: "Semester 1", code: "GENS009", name: "Elective E-A (Intro to Design Thinking)", credits: 2 }, { id: "aet-c3", semester: "Semester 1", code: "INTS001", name: "Engineering Graphics", credits: 3 }, { id: "aet-c4", semester: "Semester 1", code: "PHYS001", name: "Mechanical Properties of Matter", credits: 3 }, { id: "aet-c5", semester: "Semester 1", code: "EMCS001", name: "Engineering Mechanics Dynamics", credits: 3 }, { id: "aet-c6", semester: "Semester 1", code: "INTS005", name: "Information Technology", credits: 2 }, { id: "aet-c7", semester: "Semester 1", code: "MTHS002", name: "Calculus 1", credits: 3 }, { id: "aet-c8", semester: "Semester 1", code: "GENS004", name: "Proficiency and Capacity", credits: 1 },
             { id: "aet-c9", semester: "Semester 2", code: "GENS001", name: "Critical and Creative Thinking", credits: 2 }, { id: "aet-c10", semester: "Semester 2", code: "ARCS107", name: "Architectural Design 1", credits: 3 }, { id: "aet-c11", semester: "Semester 2", code: "ARCS105", name: "Intro to Building Construction", credits: 3 }, { id: "aet-c12", semester: "Semester 2", code: "EMCS002", name: "Eng Mechanics - Statics", credits: 2 }, { id: "aet-c13", semester: "Semester 2", code: "PHYS002", name: "Electricity and Magnetism", credits: 3 }, { id: "aet-c14", semester: "Semester 2", code: "ARCS106", name: "Digital Rep. for Architects", credits: 3 }, { id: "aet-c15", semester: "Semester 2", code: "MTHS003", name: "Calculus 2", credits: 3 },
             { id: "aet-c16", semester: "Semester 3", code: "ARCS101", name: "Intro to History of Arch.", credits: 3 }, { id: "aet-c17", semester: "Semester 3", code: "ARCS206", name: "Architectural Design-2", credits: 3 }, { id: "aet-c18", semester: "Semester 3", code: "ARCS205", name: "Building Technologies-1", credits: 2 }, { id: "aet-c19", semester: "Semester 3", code: "ARCS108", name: "Visual Perception and Art", credits: 2 }, { id: "aet-c20", semester: "Semester 3", code: "ARCS109", name: "Intro to Design Computing", credits: 2 }, { id: "aet-c21", semester: "Semester 3", code: "STRS111", name: "Structural Analysis-1", credits: 3 }, { id: "aet-c22", semester: "Semester 3", code: "MTHS005", name: "Intro to Probability & Stats", credits: 3 }, { id: "aet-c23", semester: "Semester 3", code: "AETS280", name: "Engineering Seminar", credits: 1 },
@@ -1175,39 +1085,33 @@
 
     signOutBtn.addEventListener('click', () => {
         signOut(auth).then(() => {
-            location.reload(); // Refresh to clear user state
+            location.reload();
         });
     });
 
     onAuthStateChanged(auth, async (user) => {
         currentUser = user;
         if (user) {
-            // User is logged in
             googleBtn.style.display = 'none';
             userInfo.style.display = 'flex';
             userAvatar.src = user.photoURL;
             userName.textContent = user.displayName;
             syncStatus.textContent = "Checking for cloud save...";
 
-            // Auto-fetch data if available
             await loadPlan(true);
         } else {
-            // User is guest
             googleBtn.style.display = 'flex';
             userInfo.style.display = 'none';
             syncStatus.textContent = "Local Mode (Offline)";
         }
     });
 
-    // === HELPER FUNCTIONS ===
     function escapeHtml(text) {
         if (!text) return "";
         return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
     function getStorageKey() {
-        // Format: plannerState-majorNameCleaned
-        // If logged in, we use this as part of the Doc ID
         return `plannerState-${currentMajor.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`;
     }
 
@@ -1238,7 +1142,7 @@
         currentMajor = majorName;
         majorSelector.value = majorName;
         initializePlanner();
-        await loadPlan(true); // Auto-load if switching majors
+        await loadPlan(true);
     }
 
     function createSemesterDOM(title, isSummer = false) {
@@ -1299,10 +1203,9 @@
     function createCourseElement(course) {
         const courseEl = document.createElement('div');
         courseEl.className = 'course-item';
-        courseEl.draggable = true; // Default to draggable
+        courseEl.draggable = true;
         courseEl.id = course.id;
         courseEl.dataset.credits = course.credits;
-
         courseEl.dataset.name = course.name;
         courseEl.dataset.code = course.code;
 
@@ -1324,7 +1227,6 @@
         const codeEditableAttribute = canBeEdited ? 'contenteditable="true"' : '';
         const codeEditableClass = canBeEdited ? 'course-code-editable' : '';
 
-        // === EXACT ORIGINAL HTML STRUCTURE ===
         courseEl.innerHTML = `
       <div class="course-main-info">
           <div class="course-details">
@@ -1351,7 +1253,7 @@
             if (confirm(`Delete "${courseEl.dataset.name}"?`)) {
                 const nextSibling = courseEl.nextElementSibling;
                 undoStack.push({
-                    courseData: { id: courseEl.id, name: courseEl.dataset.name, code: courseEl.dataset.code, credits: parseInt(courseEl.dataset.credits), isPlaceholder: !!courseEl.dataset.isPlaceholder, },
+                    courseData: { id: courseEl.id, name: courseEl.dataset.name, code: courseEl.dataset.code, credits: parseInt(courseEl.dataset.credits), isPlaceholder: !!courseEl.dataset.isPlaceholder },
                     grade: courseEl.querySelector('.grade-selector').value,
                     parentSemesterId: courseEl.closest('.semester-column').dataset.semesterId,
                     nextSibling: nextSibling
@@ -1363,12 +1265,9 @@
         };
         courseEl.appendChild(deleteBtn);
 
-        // === MAGIC FIX FOR DESKTOP ===
-        // If hovering over the selector, DISABLE dragging so you can click freely
         const selector = courseEl.querySelector('.grade-selector');
         selector.addEventListener('mouseenter', () => { courseEl.setAttribute('draggable', 'false'); });
         selector.addEventListener('mouseleave', () => { courseEl.setAttribute('draggable', 'true'); });
-        // Also for delete button
         deleteBtn.addEventListener('mouseenter', () => { courseEl.setAttribute('draggable', 'false'); });
         deleteBtn.addEventListener('mouseleave', () => { courseEl.setAttribute('draggable', 'true'); });
 
@@ -1381,7 +1280,7 @@
             if(draggedItem) { draggedItem.classList.remove('dragging'); }
             draggedItem = null;
             isDragging = false;
-            courseEl.setAttribute('draggable', 'true'); // Ensure it's reset
+            courseEl.setAttribute('draggable', 'true');
             clearDropTargets();
         });
 
@@ -1433,7 +1332,6 @@
 
     function addDragAndDropListeners() {
         document.querySelectorAll('.course-list').forEach(list => {
-            const newClone = list.cloneNode(false);
             list.addEventListener('dragover', e => {
                 e.preventDefault();
                 currentY = e.clientY;
@@ -1539,34 +1437,40 @@
         }
     }
 
-    // === CORE SAVE/LOAD LOGIC (UPDATED FOR CLOUD) ===
-
     async function savePlan() {
         const saveBtn = document.getElementById('saveButton');
 
-        // 1. Gather Data from DOM
         const planState = [];
         document.querySelectorAll('.course-item').forEach(courseEl => {
             const parentColumn = courseEl.closest('.semester-column');
             planState.push({
-                id: courseEl.id, name: courseEl.dataset.name, code: courseEl.dataset.code, credits: parseInt(courseEl.dataset.credits),
-                semesterId: parentColumn.dataset.semesterId, grade: courseEl.querySelector('.grade-selector').value, isPlaceholder: !!courseEl.dataset.isPlaceholder
+                id: courseEl.id,
+                name: courseEl.dataset.name,
+                code: courseEl.dataset.code,
+                credits: parseInt(courseEl.dataset.credits),
+                semesterId: parentColumn.dataset.semesterId,
+                grade: courseEl.querySelector('.grade-selector').value,
+                isPlaceholder: !!courseEl.dataset.isPlaceholder
             });
         });
 
-        // 2. Save Locally
+        const currentGpa = parseFloat(document.getElementById('cumulativeGpa').textContent.replace('GPA: ', '').trim()) || 0.00;
+        const currentCredits = parseInt(document.getElementById('totalCreditsTaken').textContent.replace('Credits: ', '').trim()) || 0;
+
         localStorage.setItem(getStorageKey(), JSON.stringify(planState));
 
-        // 3. Save to Cloud (if logged in)
         if (currentUser && isFirebaseReady) {
             saveBtn.textContent = 'Syncing...';
             try {
                 await setDoc(doc(db, "plans", getCloudDocId()), {
-                    data: planState,
-                    lastUpdated: new Date(),
+                    userId: currentUser.uid,
                     major: currentMajor,
-                    userId: currentUser.uid
+                    gpa: currentGpa,
+                    totalCredits: currentCredits,
+                    lastUpdated: new Date(),
+                    data: planState
                 });
+
                 saveBtn.textContent = 'Saved to Cloud!';
                 syncStatus.textContent = "Synced with Cloud ✅";
             } catch (e) {
@@ -1586,18 +1490,16 @@
         document.getElementById('undoButton').disabled = true;
 
         const storageKey = getStorageKey();
-        let coursesToLoad = majorCourseData[currentMajor]; // Default
+        let coursesToLoad = majorCourseData[currentMajor];
         let isSavedData = false;
         let loadedFrom = "Default";
 
-        // 1. Try Cloud Load First (if logged in)
         if (currentUser && isFirebaseReady) {
             try {
                 const docRef = doc(db, "plans", getCloudDocId());
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const cloudData = docSnap.data().data;
-                    // Overwrite local storage with cloud data for consistency
                     localStorage.setItem(storageKey, JSON.stringify(cloudData));
                     coursesToLoad = cloudData;
                     isSavedData = true;
@@ -1609,7 +1511,6 @@
             }
         }
 
-        // 2. If no cloud data (or guest), try Local Storage
         if (!isSavedData) {
             const localData = localStorage.getItem(storageKey);
             if (localData) {
@@ -1619,18 +1520,12 @@
             }
         }
 
-        // 3. Render
-        if(autoLoad && !isSavedData) {
-            // If just auto-checking on login and nothing found, don't reset unless it's a major switch
-        }
-
         coursesToLoad.forEach(courseData => {
             const courseEl = createCourseElement(courseData);
             const targetSemesterId = isSavedData ? courseData.semesterId : courseData.semester;
 
             let targetColumn = document.querySelector(`.semester-column[data-semester-id="${targetSemesterId}"]`);
 
-            // If loading saved data and semester doesn't exist (extra semesters), create it
             if (!targetColumn && isSavedData) {
                 const column = createSemesterDOM(targetSemesterId);
                 plannerContainer.appendChild(column);
@@ -1655,7 +1550,6 @@
         }
     }
 
-    // === SUGGESTION FORM LOGIC ===
     document.getElementById('suggestionForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const form = event.target;
@@ -1684,7 +1578,6 @@
         }
     });
 
-    // === INITIALIZATION ===
     function autoScrollLoop() {
         requestAnimationFrame(autoScrollLoop);
         if (!isDragging) return;
@@ -1703,7 +1596,6 @@
             }
 
             const target = e.target.closest('.course-item');
-            // Don't drag if editing text
             if (target && !e.target.isContentEditable) {
                 isDragging = true;
                 touchDraggedItem = target;
@@ -1716,9 +1608,7 @@
                 ghostItem.style.pointerEvents = 'none';
                 ghostItem.style.opacity = '0.9';
                 ghostItem.style.zIndex = '1000';
-                ghostItem.style.background = '#fff'; // Ensure ghost has background
-
-                // Hide ghost initially. Only show if we actually move.
+                ghostItem.style.background = '#fff';
                 ghostItem.style.display = 'none';
                 document.body.appendChild(ghostItem);
 
@@ -1731,17 +1621,14 @@
             if (!touchDraggedItem) return;
 
             const touch = e.touches[0];
-
-            // Show visual drag cues
             touchDraggedItem.classList.add('dragging');
             ghostItem.style.display = 'block';
-            e.preventDefault(); // Stop scrolling
+            e.preventDefault();
 
             currentY = touch.clientY;
             ghostItem.style.left = `${touch.clientX - startX}px`;
             ghostItem.style.top = `${touch.clientY - startY}px`;
 
-            // Hide ghost momentarily to check what's underneath
             ghostItem.style.display = 'none';
             const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
             ghostItem.style.display = 'block';
@@ -1766,15 +1653,13 @@
             if (!touchDraggedItem) return;
             isDragging = false;
 
-            const touch = e.changedTouches[0];
-            // Similar check: ghostItem must be visible to count as a drag
             if(ghostItem && ghostItem.style.display !== 'none') {
-                ghostItem.style.display = 'none'; // Hide to check below
-                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                ghostItem.style.display = 'none';
+                const elementBelow = document.elementFromPoint(touch.changedTouches[0].clientX, touch.changedTouches[0].clientY);
                 const dropTargetList = elementBelow ? elementBelow.closest('.course-list') : null;
 
                 if(dropTargetList) {
-                    const afterElement = getDragAfterElement(dropTargetList, touch.clientY);
+                    const afterElement = getDragAfterElement(dropTargetList, touch.changedTouches[0].clientY);
                     if (afterElement == null) dropTargetList.appendChild(touchDraggedItem);
                     else dropTargetList.insertBefore(touchDraggedItem, afterElement);
                     updateAllCalculations();
@@ -1788,7 +1673,7 @@
             clearDropTargets();
         });
     }
-    // Bind Events
+
     populateMajorSelector();
     majorSelector.addEventListener('change', handleMajorChange);
     document.getElementById('addCourseButton').addEventListener('click', addCustomCourse);
@@ -1804,11 +1689,9 @@
         });
     });
 
-    // Start
     addTouchListeners();
-    loadMajorPlan(currentMajor); // Initial Load
+    loadMajorPlan(currentMajor);
     autoScrollLoop();
-
 </script>
 </body>
 </html>
