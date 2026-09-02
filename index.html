@@ -71,10 +71,11 @@
 
         if (keysCount > 0) {
             document.getElementById('msg').textContent = "Transferring your local planner data...";
-            const payload = btoa(encodeURIComponent(JSON.stringify(localData)));
-            window.location.replace(`${TARGET_DOMAIN}/?migrationData=${encodeURIComponent(payload)}`);
+            // UTF-8 safe Base64 encode
+            const payload = btoa(unescape(encodeURIComponent(JSON.stringify(localData))));
+            // Using '#' instead of '?' completely bypasses server URL size limits
+            window.location.replace(`${TARGET_DOMAIN}/#migration=${payload}`);
         } else {
-            // No data to migrate
             window.location.replace(TARGET_DOMAIN);
         }
     }
@@ -83,22 +84,19 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Check if user is logged in via Firebase Auth
         let checked = false;
         onAuthStateChanged(auth, (user) => {
             if (checked) return;
             checked = true;
 
             if (user) {
-                // User uses cloud sync -> Redirect and trigger sign-in prompt on the new site
-                window.location.replace(`${TARGET_DOMAIN}/?promptLogin=true`);
+                // User is signed in with Firebase -> trigger sign-in prompt on new site
+                window.location.replace(`${TARGET_DOMAIN}/#promptLogin`);
             } else {
-                // User uses local storage or is new -> Extract local storage
                 migrateLocalData();
             }
         });
 
-        // Fallback in case auth check times out
         setTimeout(() => {
             if (!checked) {
                 checked = true;
